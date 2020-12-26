@@ -1,0 +1,48 @@
+{
+  "name": "rent-a-car",
+  "version": "0.0.1",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Faq-ndo/Rent-a-Car.git"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^11.0.0",
+    "@commitlint/config-conventional": "^11.0.0",
+    "dotenv": "^8.2.0",
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^7.0.1",
+    "gulp-clean-css": "^4.3.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-htmlmin": "^5.0.1",
+    "gulp-imagemin": "^7.1.0",
+    "gulp-jsdoc3": "^3.0.0",
+    "gulp-live-server": "0.0.31",
+    "gulp-purgecss": "^3.0.0",
+    "gulp-uglify-es": "^2.0.0",
+    "gulp-useref": "^5.0.0",
+    "husky": "^4.3.5",
+    "prettier": "^2.2.1",
+    "jasmine": "^3.6.2",
+    "karma": "^5.2.3",
+    "karma-chrome-launcher": "^3.1.0",
+    "karma-firefox-launcher": "^2.0.0",
+    "karma-jasmine": "^4.0.1"
+  },
+  "browserslist": [
+    "defaults",
+    "not IE 11",
+    "not IE_Mob 11",
+    "maintained node versions"
+  ],
+  "author": "PolitecnicoMalaga",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Faq-ndo/Rent-a-Car/issues"
+  },
+  "homepage": "https://github.com/Faq-ndo/Rent-a-Car#readme"
+}

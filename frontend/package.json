@@ -44,5 +44,8 @@
   "bugs": {
     "url": "https://github.com/Faq-ndo/Rent-a-Car/issues"
   },
-  "homepage": "https://github.com/Faq-ndo/Rent-a-Car#readme"
+  "homepage": "https://github.com/Faq-ndo/Rent-a-Car#readme",
+  "dependencies": {
+    "moment": "^2.29.1"
+  }
 }

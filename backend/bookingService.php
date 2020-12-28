@@ -29,4 +29,5 @@ function deleteBookingByClientID($bookingQueryData) {
 function updateBookingByClientID($bookingQueryData) {
     executeQuery($bookingQueryData, SQL_UPDATE_BOOKING_BY_CLIENT_ID);
 }
+
 ?>

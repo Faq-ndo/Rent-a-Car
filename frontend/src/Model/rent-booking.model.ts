@@ -1,18 +1,23 @@
 class rentBooking { 
     public bookingId: string;
     public clientId: string;
+    public carId: string;
     private _startDate : string = "";
     private _endDate: string = "";
     public totalPrice: number;
+    public gasLiters: number;
     public delivered: boolean;
     public description: string;
-
-    constructor({bookingId, clientId, startDate, endDate, totalPrice, delivered, description}: Booking){
+    
+    //TODO create a date control to start and end date.
+    constructor({bookingId, clientId, carId, startDate, endDate, totalPrice, gasLiters, delivered, description}: Booking){
         this.bookingId = bookingId;
         this.clientId = clientId;
+        this.carId = carId;
         this.startDate = startDate;
         this.endDate = endDate;
         this.totalPrice = totalPrice;
+        this.gasLiters = gasLiters;
         this.delivered = delivered;
         this.description = description;
     }
@@ -47,19 +52,5 @@ class rentBooking {
     }
     get endDate(){
         return this._endDate;
-    }
-
-    
+    }   
 }
-
-const book: Booking = {
-    bookingId: '1',
-    clientId: '2',
-    startDate: '31-12-2020',
-    endDate: '30-12-2020',
-    totalPrice: 23,
-    delivered: true,
-    description: ' asdasd'
-}
-
-const myBooking = new rentBooking(book);

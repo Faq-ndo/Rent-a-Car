@@ -1,6 +1,7 @@
 <?php
 include_once "clientService.php";
 include_once "bookingService.php";
+include_once "carService.php";
 include_once "connection.php";
 ?>
 
@@ -13,9 +14,11 @@ include_once "connection.php";
 <body>
 <?php
 $pdo = getConexion();
-$paramsCar = ["numberPlate" => "6881GDL", "brand" => "Ford", "model" => "Focus 2008", "color" => "Verde oliva", "bookingPrice" => "20€/h", "garage" => "A52"];
 
-print_r(insertCar($paramsCar));
+$clients = selectAllClients();
+foreach ($clients as $i => $d) {
+    print_r($d);
+}
 ?>
 </body>
 </html>

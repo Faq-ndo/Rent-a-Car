@@ -1,5 +1,5 @@
 <?php
-require_once "config_values.php";
+include_once "config_values.php";
 
 function getConexion() {
     try {
@@ -28,3 +28,4 @@ function getLastInsertId () {
     global $pdo;
     return $pdo->lastInsertId();
 }
+?>

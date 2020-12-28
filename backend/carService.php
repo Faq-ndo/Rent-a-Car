@@ -2,24 +2,25 @@
 include_once "config_values.php";
 include_once "connection.php";
 
-function selectAllCars () {
-    $stm = executeQuery([], SENTENCE_SELECT_ALL_CARS);
+function selectAllCars() {
+    $stm = executeQuery([], SQL_SELECT_ALL_CARS);
+    return $stm->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function selectCarByNumberPlate($carQueryData) {
+    $stm = executeQuery($carQueryData, SQL_SELECT_CAR_BY_NUMBER_PLATE);
     return $stm->fetch();
 }
 
-function selectCarByNumberPlate ($carQueryData) {
-    $stm = executeQuery($carQueryData, SENTENCE_SELECT_ALL_CARS);
-    return $stm->fetch();
+function deleteCarByNumberPlate($carQueryData) {
+    executeQuery($carQueryData, SQL_DELETE_CAR);
 }
 
-function deleteCarByID ($carQueryData) {
-    executeQuery($carQueryData, SENTENCE_DELETE_CAR);
+function insertCar($carQueryData) {
+    executeQuery($carQueryData, SQL_INSERT_CAR);
 }
 
-function insertCar ($carQueryData) {
-    executeQuery($carQueryData, SENTENCE_INSERT_CAR);
+function updateCarData($carQueryData) {
+    executeQuery($carQueryData, SQL_UPDATE_CAR);
 }
 
-function updateCarData ($carQueryData) {
-    executeQuery($carQueryData, SENTENCE_UPDATE_CAR);
-}

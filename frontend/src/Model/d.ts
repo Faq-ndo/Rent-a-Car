@@ -21,9 +21,11 @@ type Car = {
 type Booking = {
     bookingId: string,
     clientId: string,
+    carId: string,
     startDate: string,
     endDate: string,
     totalPrice: number,
+    gasLiters: number,
     delivered: boolean,
     description: string
 }

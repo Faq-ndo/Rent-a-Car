@@ -8,5 +8,4 @@ define("DB_TABLE_CAR", "car");
 define("DB_TABLE_CLIENT", "client");
 define("DB_TABLE_DETAILS", "bookingDetail");
 define("DB_TABLE_ENDORSED", "endorsed");
-
 ?>

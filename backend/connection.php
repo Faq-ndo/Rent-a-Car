@@ -1,8 +1,6 @@
 <?php
 include_once "config_values.php";
 
-require_once "config_values.php";
-
 function getConexion() {
     try {
         $pdo = new PDO(DB_HOST, DB_USER, DB_PASSWORD);

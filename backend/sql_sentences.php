@@ -15,6 +15,20 @@ define("SQL_UPDATE_CLIENT_BY_ID", "UPDATE " . DB_TABLE_CLIENT . " SET dni = :dni
     phoneNumber = :phoneNumber WHERE clientID = :clientID");
 
 
+
+define("SQL_SELECT_ALL_CARS", "SELECT * FROM " . DB_TABLE_CAR);
+
+define("SQL_SELECT_CAR_BY_NUMBER_PLATE", "SELECT * FROM " . DB_TABLE_CAR . " WHERE number_plate = :numberPlate");
+
+define("SQL_INSERT_CAR", "insert into " . DB_TABLE_CAR . " (number_plate, brand, model, color, bookingPrice, garage) 
+values (:numberPlate, :brand, :model, :color, :bookingPrice, :garage)");
+
+define("SQL_DELETE_CAR", "delete from " . DB_TABLE_CAR . " where number_plate = :numberPlate");
+
+define("SQL_UPDATE_CAR", "update " . DB_TABLE_CAR . " set number_plate = :numberPlate, brand = :brand, model = :model, 
+color = :color, bookingPrice = :bookingPrice, garage = :garage where carID = :carId");
+
+
 define("SQL_INSERT_BOOKING", "INSERT INTO " . DB_TABLE_BOOKING . " (clientID, startDate, endDate, totalPrice, delivered) 
 VALUES (:clientID, :startDate, :endDate, :totalPrice, :delivered)");
 
@@ -34,4 +48,5 @@ define("SQL_DELETE_BOOKING_BY_CLIENT_DNI", "DELETE FROM " . DB_TABLE_BOOKING . "
 define("SQL_UPDATE_BOOKING_BY_CLIENT_ID", "UPDATE " . DB_TABLE_BOOKING . " 
      startDate = :startDate, endDate = :endDate, 
     totalPrice = :totalPrice, delivered = :delivered WHERE clientID = :clientID");
+
 ?>

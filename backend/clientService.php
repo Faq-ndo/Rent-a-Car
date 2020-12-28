@@ -8,7 +8,7 @@ function insertClient($clientQueryData) {
 
 function selectAllClients() {
     $stm = executeQuery([], SQL_SELECT_ALL_CLIENTS);
-    return $stm->fetch();
+    return $stm->fetchAll(PDO::FETCH_ASSOC);
 }
 
 function selectClientByDNI($clientQueryData) {

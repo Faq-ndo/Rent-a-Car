@@ -2,13 +2,19 @@
 include_once "connection.php";
 include_once "sql_sentences.php";
 
-function insertBooking($bookingQueryData) {
+/*
+ * TODO:
+ * Añadir un detalle reserva con su descripción -> insertBookingDetail, updateBookingDetail y deleteBookingDetail.
+ *
+ *
+ * */
+function insertBooking($bookingQueryData, $sql) {
     executeQuery($bookingQueryData, SQL_INSERT_BOOKING);
 }
 
 function selectAllBookings() {
     $stm = executeQuery([], SQL_SELECT_ALL_BOOKINGS);
-    return $stm->fetch();
+    return $stm->fetchAll(PDO::FETCH_ASSOC);
 }
 
 function selectBookingByClientDNI($bookingQueryData) {
@@ -23,4 +29,5 @@ function deleteBookingByClientID($bookingQueryData) {
 function updateBookingByClientID($bookingQueryData) {
     executeQuery($bookingQueryData, SQL_UPDATE_BOOKING_BY_CLIENT_ID);
 }
+
 ?>

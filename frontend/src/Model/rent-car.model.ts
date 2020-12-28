@@ -18,7 +18,7 @@ class rentCar {
     }
 
     set numberPlate(numberPlate : string){
-        if(!/ ^([A-Z]{1,2})?\d{4}([A-Z]{2,3})$/.test(numberPlate)){
+        if(!/^([A-Z]{1,2})?\d{4}([A-Z]{2,3})$/.test(numberPlate)){
             throw new Error('Insert a valid Number Plate');
         }
         this._numberPlate = numberPlate;

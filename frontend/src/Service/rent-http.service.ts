@@ -22,7 +22,7 @@ class httpService {
         this.urlServer = urlServer;
         this.portServer = portServer;
         this.endPointService = endPointService;
-        this.endPoint = `${this.urlServer}:${this.portServer}/service=${this.endPointService}`;
+        this.endPoint = `${this.urlServer}?service=${this.endPointService}`;
     }
 
     getAll = () => {
@@ -57,3 +57,6 @@ class httpService {
         .then(occurrence => {return occurrence});
     }
 }
+
+const http = new httpService('192.168.0.15:61813/backend/indexController.php', 61813, 'serviceCars');
+console.log(http.getAll());

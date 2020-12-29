@@ -1,6 +1,5 @@
 class httpService { 
     public urlServer: string;
-    public portServer: number;
     public endPointService: string;
     private endPoint: string;
 
@@ -18,9 +17,8 @@ class httpService {
     private deleteOpt: Options = {
         method: 'DELETE',
     }
-    constructor(urlServer: string, portServer: number, endPointService: string){
+    constructor(urlServer: string, endPointService: string){
         this.urlServer = urlServer;
-        this.portServer = portServer;
         this.endPointService = endPointService;
         this.endPoint = `${this.urlServer}?service=${this.endPointService}`;
     }
@@ -58,5 +56,5 @@ class httpService {
     }
 }
 
-const http = new httpService('192.168.0.15:61813/backend/indexController.php', 61813, 'serviceCars');
+const http = new httpService('http://146.59.159.215:82', 'serviceCars');
 console.log(http.getAll());

@@ -8,10 +8,8 @@ class bookingService {
 
     add = (booking: Booking) => {
         const bookingSearched = this.findLocalBookingById(booking);
-        
-      if (!bookingSearched){
+         if (!bookingSearched){
         this.bookings = [...this.bookings, booking];
       }
-
     }
 }

@@ -15,20 +15,19 @@ class httpService {
             'Content-Type': 'application/json'
           }
     }
-
     private updateOpt: RequestInit = {
         method: "PUT",
         headers:{
             'Content-Type': 'application/json'
           }
     }
-
     public deleteOpt: RequestInit = {
         method: 'DELETE',
         headers:{
             'Content-Type': 'application/json'
           }
     }
+
     constructor(urlServer: string, endPointService: string){
         this.urlServer = urlServer;
         this.endPointService = endPointService;
@@ -54,17 +53,17 @@ class httpService {
         return occurrence;
     }
 
-    update = (id:string, object: Client|Car|Booking) => {
+    update = async (id:string, object: Client|Car|Booking) => {
         this.updateOpt.body = JSON.stringify(object);
-        fetch(this.endPoint + `&id=${id}`, this.updateOpt)
-        .then(response => response.json())
-        .then(occurrence => {return occurrence});
+        const response = await fetch(this.endPoint + `&id=${id}`, this.updateOpt);
+        const occurrence = await response.json();
+        return occurrence;
     }
 
-    delete = (id: string) =>{
-        fetch(this.endPoint + `&id=${id}`, this.deleteOpt)
-        .then(response => response.json())
-        .then(occurrence => {return occurrence});
+    delete = async (id: string) =>{
+        const response = await fetch(this.endPoint + `&id=${id}`, this.deleteOpt)
+        const occurrence = await response.json();
+        return occurrence;
     }
 }
 

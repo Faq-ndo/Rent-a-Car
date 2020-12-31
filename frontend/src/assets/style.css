@@ -1,0 +1,183 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700);
+@import url(https://fonts.googleapis.com/css2?family=Francois+One&display=swap);
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Open Sans', sans-serif;
+}
+header {
+  background: url('../assets/img/texturaCabecera.jpg') center center repeat;
+}
+
+#principal {
+  background-image: url('../assets/img/textura.jpg');
+}
+
+.menu-list {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+.my-menu-buttons {
+  background-color: red;
+  color: black;
+  border: 1px solid yellow;
+  width: 200px;
+  height: 50px;
+}
+
+.my-menu-buttons:hover {
+  background-color: black;
+  color: red;
+  border: 1px solid yellow;
+  width: 200px;
+  height: 50px;
+}
+
+#content {
+  width: 90%;
+  padding-left: 8px;
+}
+
+#logo {
+  width: 20%;
+  text-align: left;
+}
+
+#cabecera {
+  width: 80%;
+  align-self: center;
+  text-align: center;
+}
+.logo {
+  display: flex;
+}
+
+header .header-links {
+  position: absolute;
+  top: 48px;
+  right: 28px;
+  color: black;
+  font-size: 14px;
+}
+
+.header-links a {
+  color: red;
+}
+
+.searchform {
+  background-color: transparent;
+  border: none;
+  margin: 0;
+  padding: 5px 0 15px 0;
+  width: 190px;
+}
+
+.my-container-clients {
+  background: url('../assets/img/clientes.jpg') center top no-repeat,
+    url('../assets/img/fondo.JPG') repeat;
+}
+.my-options-buttons {
+  display: flex;
+  justify-content: center;
+
+  width: 100%;
+  height: 50px;
+  background-color: black;
+  color: red;
+  border: 1px solid yellow;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.my-options-containers {
+  display: flex;
+  align-items: flex-end;
+  width: 100%;
+  height: 350px;
+  border: 2px solid black;
+}
+
+.my-options-buttons:hover {
+  width: 100%;
+  height: 50px;
+  background-position: center;
+  background-color: red;
+  color: black;
+  border: 1px solid yellow;
+}
+
+.my-container-cars {
+  background: url('../assets/img/coches.jpg') center top no-repeat,
+    url('../assets/img/fondo.JPG') repeat;
+}
+
+.my-container-bookings {
+  background: url('../assets/img/reserva.png') center top no-repeat,
+    url('../assets/img/fondo.JPG') repeat;
+
+  display: flex;
+  align-items: flex-end;
+  width: 100%;
+  height: 350px;
+  border: 2px solid black;
+}
+
+.my-container-contact {
+  background: url('../assets/img/contacto.png') center top no-repeat,
+    url('../assets/img/fondo.JPG') repeat;
+}
+
+#managements {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+#principal {
+  display: flex;
+  justify-content: space-between;
+}
+
+table {
+  width: 100%;
+  border: 2px solid black;
+}
+
+.ttb {
+  font-family: 'Francois One', sans-serif;
+}
+
+#thUser {
+  padding-bottom: 8px;
+  padding: 8px;
+}
+
+#thCars {
+  padding-bottom: 8px;
+  padding: 8px;
+}
+
+#thBooking {
+  padding-bottom: 8px;
+  padding: 8px;
+}
+
+thead,
+tbody {
+  text-align: center;
+}
+
+.my-footer {
+  height: 260px;
+  background-color: black;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  background-image: url('../assets/img/piedepag.jpg');
+}
+
+.fab fa-twitter,
+fa-facebook {
+  color: white;
+}

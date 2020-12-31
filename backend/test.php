@@ -15,10 +15,8 @@ include_once "connection.php";
 <?php
 $pdo = getConexion();
 
-$clients = selectAllClients();
-foreach ($clients as $i => $d) {
-    print_r($d);
-}
+$cars = selectAll(SQL_SELECT_ALL_CARS);
+print_r($cars);
 ?>
 </body>
 </html>

@@ -1,26 +1,38 @@
 <?php
-include_once "config_values.php";
+include_once "crud_functions.php";
+include_once "sql_sentences.php";
 include_once "connection.php";
 
+$pdo = getConexion();
+
 function selectAllCars() {
-    $stm = executeQuery([], SQL_SELECT_ALL_CARS);
-    return $stm->fetchAll(PDO::FETCH_ASSOC);
+    $data = json_encode(selectAll(SQL_SELECT_ALL_CARS));
+    echo $data;
 }
 
-function selectCarByNumberPlate($carQueryData) {
-    $stm = executeQuery($carQueryData, SQL_SELECT_CAR_BY_NUMBER_PLATE);
-    return $stm->fetch();
+function selectCarByID($carID) {
+    $queryData = ["id" => $carID];
+    echo json_encode(selectByID($queryData, SQL_SELECT_CAR_BY_ID));
 }
 
-function deleteCarByNumberPlate($carQueryData) {
-    executeQuery($carQueryData, SQL_DELETE_CAR);
+function insertCar($_REQUEST) {
+    $car = json_decode($_REQUEST['body']);
+    $carQueryData = (array) $car;
+    insert($carQueryData, SQL_INSERT_CAR);
+    echo json_encode([$carQueryData["numberPlate"] => getLastInsertId()]);
 }
 
-function insertCar($carQueryData) {
-    executeQuery($carQueryData, SQL_INSERT_CAR);
+function updateCar($_REQUEST) {
+    $car = json_decode($_REQUEST['body']);
+    $carQueryData = (array) $car;
+    updateByID($carQueryData, SQL_UPDATE_CAR);
+    echo json_encode(["status" => "ok"]);
 }
 
-function updateCarData($carQueryData) {
-    executeQuery($carQueryData, SQL_UPDATE_CAR);
+function deleteCar($carID) {
+    $queryData = ["id" => $carID];
+    deleteByID($queryData);
+    echo json_encode(["status" => "ok"]);
 }
 
+closeConexion();

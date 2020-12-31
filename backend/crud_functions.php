@@ -1,16 +1,21 @@
 <?php
+include_once "connection.php";
+
 function insert($queryData, $sql) {
     executeQuery($queryData, $sql);
 }
 
 function selectAll($sql) {
     $stm = executeQuery([], $sql);
-    return $stm->fetchAll(PDO::FETCH_ASSOC);
+    while ($row = $stm->fetch(PDO::FETCH_ASSOC)){
+        $rows[] = $row;
+    }
+    return $rows;
 }
 
 function selectByID($queryData, $sql) {
     $stm =  executeQuery($queryData, $sql);
-    return $stm->fetch();
+    return $stm->fetch(PDO::FETCH_ASSOC);
 }
 
 function deleteByID($queryData, $sql) {

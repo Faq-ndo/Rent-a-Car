@@ -7,9 +7,9 @@ define("SQL_INSERT_CLIENT",
 
 define("SQL_SELECT_ALL_CLIENTS", "SELECT * FROM " . DB_TABLE_CLIENT);
 
-define("SQL_SELECT_CLIENT_BY_DNI", "SELECT * FROM " . DB_TABLE_CLIENT . " WHERE dni = :dni");
+define("SQL_SELECT_CLIENT_BY_ID", "SELECT * FROM " . DB_TABLE_CLIENT . " WHERE clientID = :id");
 
-define("SQL_DELETE_CLIENT_BY_DNI", "DELETE FROM " . DB_TABLE_CLIENT . " WHERE dni = :dni");
+define("SQL_DELETE_CLIENT_BY_ID", "DELETE FROM " . DB_TABLE_CLIENT . " WHERE clientID = :id");
 
 define("SQL_UPDATE_CLIENT_BY_ID", "UPDATE " . DB_TABLE_CLIENT . " SET dni = :dni, name = :cName, address = :address, 
     phoneNumber = :phoneNumber WHERE clientID = :clientID");
@@ -18,12 +18,12 @@ define("SQL_UPDATE_CLIENT_BY_ID", "UPDATE " . DB_TABLE_CLIENT . " SET dni = :dni
 
 define("SQL_SELECT_ALL_CARS", "SELECT * FROM " . DB_TABLE_CAR);
 
-define("SQL_SELECT_CAR_BY_NUMBER_PLATE", "SELECT * FROM " . DB_TABLE_CAR . " WHERE number_plate = :numberPlate");
+define("SQL_SELECT_CAR_BY_ID", "SELECT * FROM " . DB_TABLE_CAR . " WHERE carID = :id");
 
 define("SQL_INSERT_CAR", "insert into " . DB_TABLE_CAR . " (number_plate, brand, model, color, bookingPrice, garage) 
 values (:numberPlate, :brand, :model, :color, :bookingPrice, :garage)");
 
-define("SQL_DELETE_CAR", "delete from " . DB_TABLE_CAR . " where number_plate = :numberPlate");
+define("SQL_DELETE_CAR", "delete from " . DB_TABLE_CAR . " where carID = :id");
 
 define("SQL_UPDATE_CAR", "update " . DB_TABLE_CAR . " set number_plate = :numberPlate, brand = :brand, model = :model, 
 color = :color, bookingPrice = :bookingPrice, garage = :garage where carID = :carId");

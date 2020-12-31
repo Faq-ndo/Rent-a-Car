@@ -1,6 +1,6 @@
 <?php
 
-define("DB_HOST","mysql:host=vps-08d8b3f2.vps.ovh.net;dbname=rental");
+define("DB_HOST","mysql:host=146.59.159.215:3307;dbname=rental");
 define("DB_USER","alberto");
 define("DB_PASSWORD","12345tren");
 define("DB_TABLE_BOOKING", "booking");

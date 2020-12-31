@@ -26,7 +26,7 @@ values (:numberPlate, :brand, :model, :color, :bookingPrice, :garage)");
 define("SQL_DELETE_CAR", "delete from " . DB_TABLE_CAR . " where carID = :id");
 
 define("SQL_UPDATE_CAR", "update " . DB_TABLE_CAR . " set number_plate = :numberPlate, brand = :brand, model = :model, 
-color = :color, bookingPrice = :bookingPrice, garage = :garage where carID = :carId");
+color = :color, bookingPrice = :bookingPrice, garage = :garage where carID = :id");
 
 
 define("SQL_INSERT_BOOKING", "INSERT INTO " . DB_TABLE_BOOKING . " (clientID, startDate, endDate, totalPrice, delivered) 

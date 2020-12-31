@@ -1,5 +1,5 @@
 type Client = {
-    id : string,
+    id: string,
     dni : string,
     name: string,
     address : string,
@@ -9,7 +9,7 @@ type Client = {
 }
 
 type Car = {
-    id : string,
+    id: string,
     numberPlate : string,
     model : string,
     color : string,

@@ -1,6 +1,5 @@
 class httpService { 
     public urlServer: string;
-    public portServer: number;
     public endPointService: string;
     private endPoint: string;
 
@@ -15,26 +14,25 @@ class httpService {
         method: "PUT",
     }
 
-    private deleteOpt: Options = {
+    public deleteOpt: Options = {
         method: 'DELETE',
     }
-    constructor(urlServer: string, portServer: number, endPointService: string){
+    constructor(urlServer: string, endPointService: string){
         this.urlServer = urlServer;
-        this.portServer = portServer;
         this.endPointService = endPointService;
-        this.endPoint = `${this.urlServer}:${this.portServer}/service=${this.endPointService}`;
+        this.endPoint = `${this.urlServer}?service=${this.endPointService}`;
     }
 
-    getAll = () => {
-        fetch(this.endPoint, this.getOpt)
-        .then(response => response.json())
-        .then(occurrences => {return occurrences});
+    getAll = async () => {
+        const response = await fetch(this.endPoint, this.getOpt);
+        const occurences = await response.json();
+        return occurences;
     }
 
-    getOne = (id: string) => {
-        fetch(this.endPoint + `&id=${id}`, this.getOpt)
-        .then(response => response.json())
-        .then(occurrence => {return occurrence});
+    getOne = async (id: string) => {
+        const response = await fetch(this.endPoint + `&id=${id}`, this.getOpt);
+        const occurrence = await response.json();
+        return occurrence;
     }
 
     insert = (object: Client|Car|Booking) => {
@@ -57,3 +55,7 @@ class httpService {
         .then(occurrence => {return occurrence});
     }
 }
+
+const http = new httpService('http://146.59.159.215:82', 'serviceCars');
+console.log(http.getAll());
+console.log(http.getOne('6881GDL'));

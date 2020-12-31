@@ -5,14 +5,19 @@ class carService {
         this.cars = [];
     }
 
-    findLocalCarByNumberPlate = ({numberPlate}: Car) => this.cars.find(_cars => _cars.numberPlate === numberPlate);
+
+    findLocalCarBy = (param: string, valueParam: string) => {
+        return this.cars.find(_car => _car[param as keyof Car] === valueParam)
+    }
+
 
     add = (car: Car) => {
-        const carSearched = this.findLocalCarByNumberPlate(car);
+        const carSearched = this.findLocalCarBy('numberPlate', car.numberPlate);
         if (!carSearched){
             this.cars = [...this.cars, car];
         }
     }
+
     update = (newCarData: Car) => {
         this.cars.find(_car => {
             if(_car.id === newCarData.id){
@@ -23,10 +28,10 @@ class carService {
                 _car.bookingPrice = newCarData.bookingPrice;
             }
         })
-        return true;
     }
+
     delete = (car : Car) => {
-        this.cars.splice(this.cars.indexOf(car, 1));
+        return this.cars.filter(_car => _car.numberPlate !== car.numberPlate)
     }
 }
 const c1: Car = {
@@ -49,11 +54,12 @@ const c2: Car = {
 }
 const carserv = new carService();
 carserv.add(c1);
-console.log('ARRAY DE COCHES: ', carserv.cars);
+console.log(carserv.findLocalCarBy('numberPlate', c1.numberPlate));
+/* console.log('ARRAY DE COCHES: ', carserv.cars);
 setTimeout(function asd (){
     carserv.update(c2)
     console.log('ARRAY DESPUES UPDATE: ', carserv.cars);
-}, 6000);
+}, 6000); */
 
 
 

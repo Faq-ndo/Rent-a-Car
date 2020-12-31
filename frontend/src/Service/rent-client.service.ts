@@ -3,22 +3,35 @@ class clientService {
 
     constructor() {
         this.clients = [];
-        /*
-        TODO:
-            - Crar una función "grande" que lo que tiene q hacer es: 
-                1. Comprobar si está en local y si no está mirar en la bsd con la función HTTPSERVICE de buscar(facu)
-                2. En el caso que si esté en la bsd meterlo en la lista local. 
-                3. Y si no está en ninguno de los dos lados lanza el ERROR.
-        */
     }
 
-    findLocalClientByDNI = (client: Client) => this.clients.find(_clients => _clients.dni === client.dni);
+    findLocalClientBy = (param: string, valueParam: string) => {
+        return this.clients.find(_client => _client[param as keyof Client] === valueParam);
+    }
 
     add = (client: Client) => {
-        const clientSearched = this.findLocalClientByDNI(client);
+        const clientSearched = this.findLocalClientBy('dni', client.dni);
         if (!clientSearched){
             this.clients = [...this.clients, client];
       }
+    }
+
+    update = (newClientData: Client) => {
+        this.clients.find(_client => {
+            if(_client.id === newClientData.id){
+                _client.dni = newClientData.dni;
+                _client.name = newClientData.name;
+                _client.address = newClientData.address;
+                _client.phone = newClientData.phone;
+                _client.avaledBy = newClientData.avaledBy;
+                _client.endorses = newClientData.endorses;
+            }
+        })
+        return true;
+    }
+
+    delete = (client : Client) => {
+        return this.clients.filter(_client => _client.dni !== client.dni)
     }
 
     createUUID4 = () => {
@@ -27,5 +40,4 @@ class clientService {
             return value.toString(16);
         });
       }
-
 }

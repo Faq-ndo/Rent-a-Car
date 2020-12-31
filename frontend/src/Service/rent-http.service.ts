@@ -3,19 +3,31 @@ class httpService {
     public endPointService: string;
     private endPoint: string;
 
-    private getOpt: Options = {
-        method: 'GET'
+    private getOpt: RequestInit = {
+        method: 'GET',
+        headers:{
+            'Content-Type': 'application/json'
+          }
     }
-    private insertOpt: Options = {
+    private insertOpt: RequestInit = {
         method: "POST",
+        headers:{
+            'Content-Type': 'application/json'
+          }
     }
 
-    private updateOpt: Options = {
+    private updateOpt: RequestInit = {
         method: "PUT",
+        headers:{
+            'Content-Type': 'application/json'
+          }
     }
 
-    public deleteOpt: Options = {
+    public deleteOpt: RequestInit = {
         method: 'DELETE',
+        headers:{
+            'Content-Type': 'application/json'
+          }
     }
     constructor(urlServer: string, endPointService: string){
         this.urlServer = urlServer;
@@ -35,11 +47,11 @@ class httpService {
         return occurrence;
     }
 
-    insert = (object: Client|Car|Booking) => {
+    insert = async (object: Client|Car|Booking) => {
         this.insertOpt.body = JSON.stringify(object);
-        fetch(this.endPoint, this.insertOpt)
-        .then(response => response.json())
-        .then(occurrence => {return occurrence});
+        const response = await fetch(this.endPoint, this.insertOpt);
+        const occurrence = await response.json();
+        return occurrence;
     }
 
     update = (id:string, object: Client|Car|Booking) => {
@@ -56,6 +68,16 @@ class httpService {
     }
 }
 
-const http = new httpService('http://146.59.159.215:82', 'serviceCars');
+const http = new httpService('http://146.59.159.215:82', 'carService');
+const car: Car = {
+    numberPlate: '6881GLE',
+    brand: 'ford',
+    model: 'fiesta',
+    color: 'green',
+    garage: 'B32',
+    bookingPrice: 32.10
+}
 console.log(http.getAll());
-console.log(http.getOne('6881GDL'));
+console.log(http.getOne('3'));
+console.log(http.insert(car));
+console.log(http.getAll());

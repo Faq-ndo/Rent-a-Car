@@ -48,4 +48,5 @@ define("SQL_DELETE_BOOKING_BY_CLIENT_DNI", "DELETE FROM " . DB_TABLE_BOOKING . "
 define("SQL_UPDATE_BOOKING_BY_CLIENT_ID", "UPDATE " . DB_TABLE_BOOKING . " 
      startDate = :startDate, endDate = :endDate, 
     totalPrice = :totalPrice, delivered = :delivered WHERE clientID = :clientID");
+
 ?>

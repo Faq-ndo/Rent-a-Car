@@ -15,14 +15,12 @@ function selectCarByID($carID) {
     echo json_encode(selectByID($queryData, SQL_SELECT_CAR_BY_ID));
 }
 
-function insertCar($request) {
-    $carQueryData = json_decode($request, true);
+function insertCar($carQueryData) {
     insert($carQueryData, SQL_INSERT_CAR);
     echo json_encode([$carQueryData["numberPlate"] => getLastInsertId()]);
 }
 
-function updateCar($request, $id) {
-    $carQueryData = json_decode($request, true);
+function updateCar($carQueryData, $id) {
     $carQueryData["id"] = $id;
     updateByID($carQueryData, SQL_UPDATE_CAR);
     echo json_encode(["status" => "ok"]);

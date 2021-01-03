@@ -17,8 +17,8 @@ class rentBooking {
         this.startDate = startDate;
         this.endDate = endDate;
         this.totalPrice = totalPrice;
-        this.gasLiters = gasLiters;
         this.delivered = delivered;
+        this.gasLiters = gasLiters;
         this.description = description;
     }
 

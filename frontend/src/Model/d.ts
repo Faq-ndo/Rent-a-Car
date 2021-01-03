@@ -25,7 +25,7 @@ type Booking = {
     startDate: string,
     endDate: string,
     totalPrice: number,
-    gasLiters: number,
     delivered: boolean,
+    gasLiters: number,
     description: string
 }

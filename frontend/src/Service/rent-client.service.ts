@@ -18,16 +18,10 @@ class clientService {
 
     update = (newClientData: Client) => {
         this.clients.find(_client => {
-            if(_client.id === newClientData.id){
-                _client.dni = newClientData.dni;
-                _client.name = newClientData.name;
-                _client.address = newClientData.address;
-                _client.phone = newClientData.phone;
-                _client.avaledBy = newClientData.avaledBy;
-                _client.endorses = newClientData.endorses;
+            if(_client.dni === newClientData.dni){
+                Object.assign(_client, newClientData);
             }
         })
-        return true;
     }
 
     delete = (client : Client) => {

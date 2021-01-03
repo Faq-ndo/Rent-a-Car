@@ -1,8 +1,27 @@
 class carService {
     public cars: Car[];
+    private http:  httpService;
 
     constructor() {
         this.cars = [];
+        this.http = new httpService('http://146.59.159.215:82','carService');
+        const as = this.http.getAll().then(res =>  res);
+        
+    }
+
+    insertCar = (car: Car) => {
+        this.add(car);
+        this.http.insert(car);
+    }
+
+    updateCar = (car: Car) => {
+        this.update(car);
+        this.http.update(car.id, car)
+    }
+
+    deleteCar = (car: Car) => {
+        this.delete(car);
+        this.http.delete(car.id)
     }
 
 
@@ -11,50 +30,34 @@ class carService {
     }
 
 
-    add = (car: Car) => {
+    private add = (car: Car) => {
         const carSearched = this.findLocalCarBy('numberPlate', car.numberPlate);
         if (!carSearched){
             this.cars = [...this.cars, car];
         }
     }
 
-    update = (newCarData: Car) => {
+    private update = (newCarData: Car) => {
         this.cars.find(_car => {
-            if(_car.id === newCarData.id){
-                _car.numberPlate = newCarData.numberPlate;
-                _car.brand = newCarData.brand;
-                _car.model = newCarData.model;
-                _car.model = newCarData.color;
-                _car.bookingPrice = newCarData.bookingPrice;
+            if(_car.numberPlate === newCarData.numberPlate){
+               Object.assign(_car, newCarData);
             }
         })
     }
 
-    delete = (car : Car) => {
+    private delete = (car : Car) => {
         return this.cars.filter(_car => _car.numberPlate !== car.numberPlate)
     }
 }
 const c1: Car = {
-    id: '12',
-    numberPlate: '6881 GDL',
-    model: 'FOCUS',
-    brand: 'FORD',
-    color: 'RED',
-    bookingPrice: 32,
-    garage: 'A23'
-}
-const c2: Car = {
-    id: '12',
-    numberPlate: '4771 GDL',
-    model: 'IBIZA',
-    brand: 'SEAT',
-    color: 'BLUE',
-    bookingPrice: 52,
-    garage: 'A63'
+    numberPlate: '6881GLE',
+    brand: 'ford',
+    model: 'fiesta',
+    color: 'green',
+    garage: 'B32',
+    bookingPrice: 32.10
 }
 const carserv = new carService();
-carserv.add(c1);
-console.log(carserv.findLocalCarBy('numberPlate', c1.numberPlate));
 /* console.log('ARRAY DE COCHES: ', carserv.cars);
 setTimeout(function asd (){
     carserv.update(c2)

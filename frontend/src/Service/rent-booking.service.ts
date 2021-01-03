@@ -18,14 +18,7 @@ class bookingService {
     update = (newBookingData: Booking) => {
         this.bookings.find(_booking => {
             if(_booking.bookingId === newBookingData.bookingId){
-                _booking.clientId = newBookingData.clientId;
-                _booking.carId = newBookingData.carId;
-                _booking.startDate = newBookingData.startDate;
-                _booking.endDate = newBookingData.endDate;
-                _booking.totalPrice = newBookingData.totalPrice;
-                _booking.gasLiters = newBookingData.gasLiters;
-                _booking.delivered = newBookingData.delivered;
-                _booking.description = newBookingData.description;
+                Object.assign(_booking, newBookingData);
             }
         })
     }

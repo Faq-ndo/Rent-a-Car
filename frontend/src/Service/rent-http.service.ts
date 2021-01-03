@@ -42,27 +42,35 @@ class httpService {
 
     getOne = async (id: string) => {
         const response = await fetch(this.endPoint + `&id=${id}`, this.getOpt);
-        const occurrence = await response.json();
+        const occurrence = await response.json().catch(e => {
+            console.log(e);
+        });
         return occurrence;
     }
 
     insert = async (object: Client|Car|Booking) => {
         this.insertOpt.body = JSON.stringify(object);
         const response = await fetch(this.endPoint, this.insertOpt);
-        const occurrence = await response.json();
+        const occurrence = await response.json().catch(e => {
+            console.log(e);
+        })
         return occurrence;
     }
 
-    update = async (id:string, object: Client|Car|Booking) => {
+    update = async (id: string | undefined, object: Client|Car|Booking) => {
         this.updateOpt.body = JSON.stringify(object);
         const response = await fetch(this.endPoint + `&id=${id}`, this.updateOpt);
-        const occurrence = await response.json();
+        const occurrence = await response.json().catch(e => {
+            console.log(e);
+        });
         return occurrence;
     }
 
-    delete = async (id: string) =>{
+    delete = async (id: string | undefined) =>{
         const response = await fetch(this.endPoint + `&id=${id}`, this.deleteOpt)
-        const occurrence = await response.json();
+        const occurrence = await response.json().catch(e => {
+            console.log(e);
+        });
         return occurrence;
     }
 }
@@ -76,7 +84,7 @@ const car: Car = {
     garage: 'B32',
     bookingPrice: 32.10
 }
-console.log(http.getAll());
+/* console.log(http.getAll());
 console.log(http.getOne('3'));
 console.log(http.insert(car));
-console.log(http.getAll());
+console.log(http.getAll()); */

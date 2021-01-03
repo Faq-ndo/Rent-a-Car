@@ -17,7 +17,11 @@ if($_GET["service"] == "carService") {
 
     if($_SERVER['REQUEST_METHOD'] == 'POST') {
         $queryData = getValuesFromRequest();
-        insertCar($queryData);
+        try{
+            insertCar($queryData);
+        } catch (Exception $exception){
+            throw $exception;
+        }
         die();
     }
     if($_SERVER['REQUEST_METHOD'] == 'PUT') {

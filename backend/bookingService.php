@@ -39,16 +39,11 @@ function deleteCar($carID)
 }
 
 closeConexion();
-
+/*
 include_once "connection.php";
 include_once "sql_sentences.php";
 
-/*
- * TODO:
- * Añadir un detalle reserva con su descripción -> insertBookingDetail, updateBookingDetail y deleteBookingDetail.
- *
- *
- * */
+
 function insertBooking($bookingQueryData, $sql) {
     executeQuery($bookingQueryData, SQL_INSERT_BOOKING);
 }
@@ -70,5 +65,5 @@ function deleteBookingByClientID($bookingQueryData) {
 function updateBookingByClientID($bookingQueryData) {
     executeQuery($bookingQueryData, SQL_UPDATE_BOOKING_BY_CLIENT_ID);
 }
-
+*/
 ?>

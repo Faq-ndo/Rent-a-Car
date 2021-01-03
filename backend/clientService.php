@@ -1,26 +1,35 @@
 <?php
-include_once "connection.php";
+include_once "crud_functions.php";
 include_once "sql_sentences.php";
+include_once "connection.php";
 
-function insertClient($clientQueryData) {
-    executeQuery($clientQueryData, SQL_INSERT_CLIENT);
+$pdo = getConexion();
+
+function selectAllClients(){
+    $data = json_encode(selectAll(SQL_SELECT_ALL_CLIENTS));
+    echo $data;
 }
 
-function selectAllClients() {
-    $stm = executeQuery([], SQL_SELECT_ALL_CLIENTS);
-    return $stm->fetchAll(PDO::FETCH_ASSOC);
+function selectClientByID($clientID){
+    $queryData = ["id" => $clientID];
+    echo json_encode(selectByID($queryData, SQL_SELECT_CLIENT_BY_ID));
 }
 
-function selectClientByDNI($clientQueryData) {
-    $stm =  executeQuery($clientQueryData, SQL_SELECT_CLIENT_BY_DNI);
-    return $stm->fetch();
+function insertClient($clientQueryData){
+    insert($clientQueryData, SQL_INSERT_CLIENT);
+    echo json_encode([$clientQueryData["dni"] => getLastInsertId()]);
 }
 
-function deleteClientByDNI($clientQueryData) {
-    executeQuery($clientQueryData, SQL_DELETE_CLIENT_BY_DNI);
+function updateClient($clientQueryData, $id){
+    $clientQueryData["id"] = $id;
+    updateByID($clientQueryData, SQL_UPDATE_CLIENT);
+    echo json_encode(["status" => "ok"]);
 }
 
-function updateClientByID($clientQueryData) {
-    executeQuery($clientQueryData, SQL_UPDATE_CLIENT_BY_ID);
+function deleteClient($clientID){
+    $queryData = ["id" => $clientID];
+    deleteByID($queryData, SQL_DELETE_CAR);
+    echo json_encode(["status" => "ok"]);
 }
-?>
+
+closeConexion();

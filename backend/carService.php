@@ -1,43 +1,42 @@
 <?php
 include_once "crud_functions.php";
 include_once "sql_sentences.php";
-include_once "connection.php";
 include_once "config_values.php";
 
-$pdo = getConexion();
-
 function selectAllCars() {
-    echo json_encode(selectAll(SQL_SELECT_ALL_CARS, true));
+    echo json_encode(selectAll(SQL_SELECT_ALL_CARS));
 }
 
 function selectCarByID($carID) {
     $queryData = ["id" => $carID];
-    echo json_encode(selectByID($queryData, SQL_SELECT_CAR_BY_ID, true));
+    echo json_encode(selectBy($queryData, SQL_SELECT_CAR_BY_ID));
 }
 
 function insertCar($carQueryData) {
-    $selectQueryData = ["id" => $carQueryData["id"]];
-    $carData = selectCarByID($selectQueryData);
-    if (!$carData){
-        $wasInserted = insert($carQueryData, SQL_INSERT_CAR);
-        if($wasInserted){
-            echo json_encode([$carQueryData["numberPlate"] => getLastInsertId()]);
-        } else throw new Exception("the car could not be inserted due to a problem");
-    } else{
-        throw new Exception("The car that is being inserted is duplied");
-    }
+    $carData = selectBy(["numberPlate" => $carQueryData["numberPlate"]], SQL_SELECT_CAR_BY_NUMBER_PLATE);
+    if (!$carData["carID"]){
+        $hasBeenInserted = insert($carQueryData, SQL_INSERT_CAR);
+        if($hasBeenInserted){
+            echo json_encode(["status" => "ok", "id" => getLastInsertId(), "numberPlate" => $carQueryData["numberPlate"]]);
+        } else echo json_encode(["status" => "ko", "errorMessage" => "The car could not be inserted due to a problem"]);
+    } else echo json_encode(["status" => "ko", "errorMessage" => "The car that is being inserted is duplied"]);
 }
 
 function updateCar($carQueryData, $id) {
     $carQueryData["id"] = $id;
-    updateByID($carQueryData, SQL_UPDATE_CAR);
-    echo json_encode(["status" => "ok"]);
+    $hasBeenUpdated = updateByID($carQueryData, SQL_UPDATE_CAR);
+    if($hasBeenUpdated){
+        echo json_encode(["status" => "ok"]);
+    } else echo json_encode(["status" => "ko", "errorMessage" => "The car data could not be updated"]);
 }
 
 function deleteCar($carID) {
     $queryData = ["id" => $carID];
-    deleteByID($queryData, SQL_DELETE_CAR);
-    echo json_encode(["status" => "ok"]);
+    $carData = selectBy($queryData, SQL_SELECT_CAR_BY_ID);
+    if (isset($carData["carID"])){
+        $hasBeenDeleted = deleteByID($queryData, SQL_DELETE_CAR);
+        if($hasBeenDeleted){
+            echo json_encode(["status" => "ok"]);
+        } else echo json_encode(["status" => "ko", "errorMessage" => "The car data could not be deleted"]);
+    } else echo json_encode(["status" => "ko", "errorMessage" => "The car that is being deleted does not exist"]);
 }
-
-closeConexion();

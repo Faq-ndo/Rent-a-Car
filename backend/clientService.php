@@ -1,9 +1,7 @@
 <?php
 include_once "crud_functions.php";
 include_once "sql_sentences.php";
-include_once "connection.php";
-
-$pdo = getConexion();
+include_once "config_values.php";
 
 function selectAllClients(){
     $data = json_encode(selectAll(SQL_SELECT_ALL_CLIENTS));
@@ -31,5 +29,3 @@ function deleteClient($clientID){
     deleteByID($queryData, SQL_DELETE_CAR);
     echo json_encode(["status" => "ok"]);
 }
-
-closeConexion();

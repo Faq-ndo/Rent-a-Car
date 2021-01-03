@@ -20,6 +20,8 @@ define("SQL_SELECT_ALL_CARS", "SELECT * FROM " . DB_TABLE_CAR);
 
 define("SQL_SELECT_CAR_BY_ID", "SELECT * FROM " . DB_TABLE_CAR . " WHERE carID = :id");
 
+define("SQL_SELECT_CAR_BY_NUMBER_PLATE", "SELECT * FROM " . DB_TABLE_CAR . " WHERE number_plate = :numberPlate");
+
 define("SQL_INSERT_CAR", "insert into " . DB_TABLE_CAR . " (number_plate, brand, model, color, bookingPrice, garage) 
 values (:numberPlate, :brand, :model, :color, :bookingPrice, :garage)");
 
@@ -41,12 +43,12 @@ ON b.clientID = c.clientID INNER JOIN " . DB_TABLE_BOOKING_DETAILS . " d
 ON b.bookingID = d.bookingID INNER JOIN " . DB_TABLE_CAR .  " ca ON d.carID = ca.carID");
 
 
-define("SQL_SELECT_BOOKING_BY_BOOKING_ID", "SELECT b.bookingID, c.dni , ca.carID, b.startDate, b.endDate, b.totalPrice, b.delivered, d.gas_liters, d.description  FROM " . DB_TABLE_BOOKING . " b 
+define("SQL_SELECT_BOOKING_BY_BOOKING_ID", "SELECT b.bookingID, c.dni , ca.number_plate, b.startDate, b.endDate, b.totalPrice, b.delivered, d.gas_liters, d.description  FROM " . DB_TABLE_BOOKING . " b 
 INNER JOIN " . DB_TABLE_CLIENT . " c 
 ON b.clientID = c.clientID INNER JOIN " . DB_TABLE_BOOKING_DETAILS . " d 
 ON b.bookingID = d.bookingID INNER JOIN " . DB_TABLE_CAR .  " ca ON d.carID = ca.carID WHERE b.bookingID = :bookingID");
 
-define("SQL_SELECT_BOOKING_BY_CLIENT_DNI", "SELECT b.bookingID, c.dni , ca.carID, b.startDate, b.endDate, b.totalPrice, b.delivered, d.gas_liters, d.description  FROM " . DB_TABLE_BOOKING . " b 
+define("SQL_SELECT_BOOKING_BY_CLIENT_DNI", "SELECT b.bookingID, c.dni , ca.number_plate, b.startDate, b.endDate, b.totalPrice, b.delivered, d.gas_liters, d.description  FROM " . DB_TABLE_BOOKING . " b 
 INNER JOIN " . DB_TABLE_CLIENT . " c 
 ON b.clientID = c.clientID INNER JOIN " . DB_TABLE_BOOKING_DETAILS . " d 
 ON b.bookingID = d.bookingID INNER JOIN " . DB_TABLE_CAR .  " ca ON d.carID = ca.carID WHERE c.dni = :dni");

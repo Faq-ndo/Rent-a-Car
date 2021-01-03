@@ -4,9 +4,12 @@ header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Conte
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
 header('Content-Type: application/json; charset=utf-8');
 
+include_once "connection.php";
 include_once "clientService.php";
 include_once "carService.php";
 include_once "bookingService.php";
+
+$pdo = getConexion();
 
 function getValuesFromRequest (){
     $request = file_get_contents("php://input");
@@ -17,11 +20,7 @@ if($_GET["service"] == "carService") {
 
     if($_SERVER['REQUEST_METHOD'] == 'POST') {
         $queryData = getValuesFromRequest();
-        try{
-            insertCar($queryData);
-        } catch (Exception $exception){
-            throw $exception;
-        }
+        insertCar($queryData);
         die();
     }
     if($_SERVER['REQUEST_METHOD'] == 'PUT') {
@@ -83,3 +82,5 @@ if($_GET["service"] == "bookingService") {
         selectAllBookings();
     }
 }
+
+closeConexion();

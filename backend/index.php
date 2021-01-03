@@ -2,42 +2,84 @@
 header('Access-Control-Allow-Origin: *');
 header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method");
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
-header("Allow: GET, POST, OPTIONS, PUT, DELETE");
 header('Content-Type: application/json; charset=utf-8');
 
 include_once "clientService.php";
 include_once "carService.php";
 include_once "bookingService.php";
 
+function getValuesFromRequest (){
+    $request = file_get_contents("php://input");
+    return json_decode($request, true);;
+}
+
 if($_GET["service"] == "carService") {
-    if(!isset($_GET["id"])){
-        selectAllCars();
-    }
-    else {
-        selectCarByID($_GET["id"]);
-    }
+
     if($_SERVER['REQUEST_METHOD'] == 'POST') {
-        insertCar($_REQUEST);
+        $queryData = getValuesFromRequest();
+        try{
+            insertCar($queryData);
+        } catch (Exception $exception){
+            throw $exception;
+        }
+        die();
     }
     if($_SERVER['REQUEST_METHOD'] == 'PUT') {
-        updateCar($_REQUEST);
+        $queryData = getValuesFromRequest();
+        updateCar($queryData, $_GET["id"]);
+        die();
     }
     if($_SERVER['REQUEST_METHOD'] == 'DELETE') {
         deleteCar($_GET["id"]);
+        die();
+    }
+    if(isset($_GET["id"])){
+        selectCarByID($_GET["id"]);
+    }else {
+        selectAllCars();
     }
 }
 
 if($_GET["service"] == "clientService") {
-    $location = isset($_GET["id"]) ? "clientService.php?id=".$_GET['id'] : "carService.php";
-    header("location: $location");
+    if($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $queryData = getValuesFromRequest();
+        insertClient($queryData);
+        die();
+    }
+    if($_SERVER['REQUEST_METHOD'] == 'PUT') {
+        $queryData = getValuesFromRequest();
+        updateClient($queryData, $_GET["id"]);
+        die();
+    }
+    if($_SERVER['REQUEST_METHOD'] == 'DELETE') {
+        deleteClient($_GET["id"]);
+        die();
+    }
+    if(isset($_GET["id"])){
+        selectClientByID($_GET["id"]);
+    }else {
+        selectAllClients();
+    }
 }
 
 if($_GET["service"] == "bookingService") {
-    $location = isset($_GET["id"]) ? "carService.php?id=".$_GET['id'] : "carService.php";
-    header("location: $location");
-}
-
-if($_GET["service"] == "serviceCars") {
-    $location = isset($_GET["id"]) ? "carService.php?id=".$_GET['id'] : "carService.php";
-    header("location: $location");
+    if($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $queryData = getValuesFromRequest();
+        insertBooking($queryData);
+        die();
+    }
+    if($_SERVER['REQUEST_METHOD'] == 'PUT') {
+        $queryData = getValuesFromRequest();
+        updateBooking($queryData, $_GET["id"]);
+        die();
+    }
+    if($_SERVER['REQUEST_METHOD'] == 'DELETE') {
+        deleteBooking($_GET["id"]);
+        die();
+    }
+    if(isset($_GET["id"])){
+        selectBookingByID($_GET["id"]);
+    }else {
+        selectAllBookings();
+    }
 }

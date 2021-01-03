@@ -2,26 +2,28 @@
 include_once "connection.php";
 
 function insert($queryData, $sql) {
-    executeQuery($queryData, $sql);
+    return executeQuery($queryData, $sql);
 }
 
-function selectAll($sql) {
-    $stm = executeQuery([], $sql);
-    while ($row = $stm->fetch(PDO::FETCH_ASSOC)){
-        $rows[] = $row;
-    }
+function selectAll($sql, $getData) {
+    $stm = executeQuery([], $sql, $getData);
+    if($stm->rowCount() > 0){
+        while ($row = $stm->fetch(PDO::FETCH_ASSOC)){
+            $rows[] = $row;
+        }
+    } else $rows = ["NoRecords" => "No records found at this moment"];
     return $rows;
 }
 
-function selectByID($queryData, $sql) {
-    $stm =  executeQuery($queryData, $sql);
+function selectByID($queryData, $sql, $getData) {
+    $stm =  executeQuery($queryData, $sql, $getData);
     return $stm->fetch(PDO::FETCH_ASSOC);
 }
 
 function deleteByID($queryData, $sql) {
-    executeQuery($queryData, $sql);
+    return executeQuery($queryData, $sql);
 }
 
 function updateByID($queryData, $sql) {
-    executeQuery($queryData, $sql);
+    return executeQuery($queryData, $sql);
 }

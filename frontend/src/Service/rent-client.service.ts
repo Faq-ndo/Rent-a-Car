@@ -18,7 +18,7 @@ class clientService {
 
     update = (newClientData: Client) => {
         this.clients.find(_client => {
-            if(_client.dni === newClientData.dni){
+            if(_client.id === newClientData.id){
                 Object.assign(_client, newClientData);
             }
         })

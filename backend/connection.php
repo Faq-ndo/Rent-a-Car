@@ -17,11 +17,11 @@ function closeConexion() {
     unset($pdo);
 }
 
-function executeQuery ($queryData, $sql) {
+function executeQuery ($queryData, $sql, $getData = false) {
     global $pdo;
     $stm = $pdo->prepare($sql);
-    $stm->execute($queryData);
-    return $stm;
+    $wasOK = $stm->execute($queryData);
+    return $getData ? $stm : $wasOK;
 }
 
 function getLastInsertId () {

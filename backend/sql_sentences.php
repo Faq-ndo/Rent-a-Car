@@ -9,6 +9,8 @@ define("SQL_SELECT_ALL_CLIENTS", "SELECT * FROM " . DB_TABLE_CLIENT);
 
 define("SQL_SELECT_CLIENT_BY_ID", "SELECT * FROM " . DB_TABLE_CLIENT . " WHERE clientID = :id");
 
+define("SQL_SELECT_CLIENT_BY_DNI", "SELECT * FROM " . DB_TABLE_CLIENT . " WHERE dni = :dni");
+
 define("SQL_DELETE_CLIENT", "DELETE FROM " . DB_TABLE_CLIENT . " WHERE clientID = :id");
 
 define("SQL_UPDATE_CLIENT", "UPDATE " . DB_TABLE_CLIENT . " SET dni = :dni, name = :cName, address = :address, 

@@ -5,9 +5,12 @@ define("SQL_INSERT_CLIENT",
     "INSERT INTO ". DB_TABLE_CLIENT . " (dni, name, address, phoneNumber) 
     VALUES (:dni, :cName, :address, :phoneNumber)");
 
+//define("SQL_SELECT_ALL_CLIENTS", "SELECT * FROM " . DB_TABLE_CLIENT);
 define("SQL_SELECT_ALL_CLIENTS", "SELECT * FROM " . DB_TABLE_CLIENT);
 
 define("SQL_SELECT_CLIENT_BY_ID", "SELECT * FROM " . DB_TABLE_CLIENT . " WHERE id = :id");
+
+define("SQL_SELECT_CLIENT_BY_DNI", "SELECT * FROM " . DB_TABLE_CLIENT . " WHERE dni = :dni");
 
 define("SQL_DELETE_CLIENT", "DELETE FROM " . DB_TABLE_CLIENT . " WHERE id = :id");
 

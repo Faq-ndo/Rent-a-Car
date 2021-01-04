@@ -1,59 +1,82 @@
 class httpService { 
     public urlServer: string;
-    public portServer: number;
     public endPointService: string;
     private endPoint: string;
 
-    private getOpt: Options = {
-        method: 'GET'
+    private getOpt: RequestInit = {
+        method: 'GET',
+        headers:{
+            'Content-Type': 'application/json'
+          }
     }
-    private insertOpt: Options = {
+    private insertOpt: RequestInit = {
         method: "POST",
+        headers:{
+            'Content-Type': 'application/json'
+          }
     }
-
-    private updateOpt: Options = {
+    private updateOpt: RequestInit = {
         method: "PUT",
+        headers:{
+            'Content-Type': 'application/json'
+          }
     }
-
-    private deleteOpt: Options = {
+    public deleteOpt: RequestInit = {
         method: 'DELETE',
+        headers:{
+            'Content-Type': 'application/json'
+          }
     }
-    constructor(urlServer: string, portServer: number, endPointService: string){
+
+    constructor(urlServer: string, endPointService: string){
         this.urlServer = urlServer;
-        this.portServer = portServer;
         this.endPointService = endPointService;
-        this.endPoint = `${this.urlServer}:${this.portServer}/service=${this.endPointService}`;
+        this.endPoint = `${this.urlServer}?service=${this.endPointService}`;
     }
 
-    getAll = () => {
-        fetch(this.endPoint, this.getOpt)
-        .then(response => response.json())
-        .then(occurrences => {return occurrences});
+    getAll = async () => {
+        const response = await fetch(this.endPoint, this.getOpt);
+        const occurences = await response.json();
+        return occurences;
     }
 
-    getOne = (id: string) => {
-        fetch(this.endPoint + `&id=${id}`, this.getOpt)
-        .then(response => response.json())
-        .then(occurrence => {return occurrence});
+    getOne = async (id: string) => {
+        const response = await fetch(this.endPoint + `&id=${id}`, this.getOpt);
+        const occurrence = await response.json();
+        return occurrence;
     }
 
-    insert = (object: Client|Car|Booking) => {
+    insert = async (object: Client|Car|Booking) => {
         this.insertOpt.body = JSON.stringify(object);
-        fetch(this.endPoint, this.insertOpt)
-        .then(response => response.json())
-        .then(occurrence => {return occurrence});
+        const response = await fetch(this.endPoint, this.insertOpt);
+        const occurrence = await response.json();
+        return occurrence;
     }
 
-    update = (id:string, object: Client|Car|Booking) => {
+    update = async (id:string, object: Client|Car|Booking) => {
         this.updateOpt.body = JSON.stringify(object);
-        fetch(this.endPoint + `&id=${id}`, this.updateOpt)
-        .then(response => response.json())
-        .then(occurrence => {return occurrence});
+        const response = await fetch(this.endPoint + `&id=${id}`, this.updateOpt);
+        const occurrence = await response.json();
+        return occurrence;
     }
 
-    delete = (id: string) =>{
-        fetch(this.endPoint + `&id=${id}`, this.deleteOpt)
-        .then(response => response.json())
-        .then(occurrence => {return occurrence});
+    delete = async (id: string) =>{
+        const response = await fetch(this.endPoint + `&id=${id}`, this.deleteOpt)
+        const occurrence = await response.json();
+        return occurrence;
     }
 }
+
+const http = new httpService('http://146.59.159.215:82', 'carService');
+const car: Car = {
+    numberPlate: '6881GLE',
+    brand: 'ford',
+    model: 'fiesta',
+    color: 'green',
+    garage: 'B32',
+    bookingPrice: 32.10
+}
+console.log(http.getAll());
+console.log(http.getOne('3'));
+console.log(http.insert(car));
+console.log(http.getAll());

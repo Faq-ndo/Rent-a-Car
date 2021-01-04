@@ -1,5 +1,5 @@
 class rentCar { 
-    public id : string;
+    public id : string | undefined;
     private _numberPlate: string = "";
     public model : string;
     public color : string;

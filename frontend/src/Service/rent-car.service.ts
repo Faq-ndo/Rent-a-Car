@@ -5,52 +5,80 @@ class carService {
     constructor() {
         this.cars = [];
         this.http = new httpService('http://146.59.159.215:82','carService');
-        const as = this.http.getAll().then(res =>  res);
-        
+        this.http.getAll().then(res => {
+            const cars = res.map((_ob: Car) => {
+                return new rentCar(_ob);
+            })
+            this.cars = [...this.cars, ...cars];
+        });
     }
 
-    insertCar = (car: Car) => {
+    insertCar = (car: rentCar) => {
         this.add(car);
-        this.http.insert(car);
+        this.http.insert(car).then(res => {
+            if(res.status === 'ko'){
+                console.log(res.errorMessage)
+                this.delete(car);
+            }
+            if(res.status === 'ok'){
+                this.cars.find(_car => {
+                    if(_car.numberPlate === res.numberPlate){
+                        _car.id = res.id
+                    }
+                })
+            }
+        });
     }
 
-    updateCar = (car: Car) => {
+    updateCar = (car: rentCar) => {
         this.update(car);
         this.http.update(car.id, car)
     }
 
-    deleteCar = (car: Car) => {
+    deleteCar = (car: rentCar) => {
         this.delete(car);
-        this.http.delete(car.id)
+        this.http.delete(car.id).then(res => {
+            if(res.status === 'ko'){
+                console.log(res.errorMessage);
+            }if(res.status === 'ok'){
+                console.log('The car was deleted successfully');
+            }
+        })
     }
 
 
-    findLocalCarBy = (param: string, valueParam: string) => {
-        return this.cars.find(_car => _car[param as keyof Car] === valueParam)
-    }
+    findLocalCarBy = (param: string, valueParam: string) => 
+         this.cars.find(_car => _car[param as keyof Car] === valueParam)
 
 
-    private add = (car: Car) => {
+    private add = (car: rentCar) => {
         const carSearched = this.findLocalCarBy('numberPlate', car.numberPlate);
         if (!carSearched){
             this.cars = [...this.cars, car];
         }
     }
 
-    private update = (newCarData: Car) => {
+    private update = (newCarData: rentCar) => {
         this.cars.find(_car => {
-            if(_car.numberPlate === newCarData.numberPlate){
+            if(_car.id === newCarData.id){
                Object.assign(_car, newCarData);
             }
         })
     }
 
-    private delete = (car : Car) => {
+    private delete = (car : rentCar) => {
         return this.cars.filter(_car => _car.numberPlate !== car.numberPlate)
     }
+
+    createUUID4 = () => {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, cod => {
+            let randUUID = Math.random() * 16 | 0, value = cod == 'x' ? randUUID : (randUUID & 0x3 | 0x8);
+            return value.toString(16);
+        });
+      }
 }
 const c1: Car = {
-    numberPlate: '6881GLE',
+    numberPlate: '6104MMM',
     brand: 'ford',
     model: 'fiesta',
     color: 'green',
@@ -58,11 +86,14 @@ const c1: Car = {
     bookingPrice: 32.10
 }
 const carserv = new carService();
-/* console.log('ARRAY DE COCHES: ', carserv.cars);
-setTimeout(function asd (){
-    carserv.update(c2)
-    console.log('ARRAY DESPUES UPDATE: ', carserv.cars);
-}, 6000); */
+const car1 = new rentCar(c1);
+carserv.insertCar(car1);
+
+
+setTimeout(function as(){
+    console.log('COCHES CARGADOS EN LOCAL', carserv.cars)
+},6000);
+
 
 
 

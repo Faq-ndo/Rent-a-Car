@@ -46,4 +46,15 @@ class rentCar {
     get garage(){
         return this._garage;
     }
+
+    toJSON() {
+        return {
+            numberPlate : this._numberPlate,
+            brand: this._brand,
+            model: this.model,
+            color: this.color,
+            garage: this._garage,
+            bookingPrice: this.bookingPrice
+        }
+    }
 }

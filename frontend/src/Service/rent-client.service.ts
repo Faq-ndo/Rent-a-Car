@@ -1,8 +1,13 @@
 class clientService {
     public clients: Client[];
+    private http: httpService;
 
     constructor() {
         this.clients = [];
+        this.http = new httpService('http://146.59.159.215:82','clientService');
+        this.http.getAll().then(res => {
+            this.clients = res;
+        });
     }
 
     findLocalClientBy = (param: string, valueParam: string) => {

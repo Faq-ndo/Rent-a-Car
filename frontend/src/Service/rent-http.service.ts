@@ -12,7 +12,8 @@ class httpService {
     private insertOpt: RequestInit = {
         method: "POST",
         headers:{
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
           }
     }
     private updateOpt: RequestInit = {
@@ -42,42 +43,34 @@ class httpService {
 
     getOne = async (id: string) => {
         const response = await fetch(this.endPoint + `&id=${id}`, this.getOpt);
-        const occurrence = await response.json().catch(e => {
-            console.log(e);
-        });
+        const occurrence = await response.json();
         return occurrence;
     }
 
     insert = async (object: Client|Car|Booking) => {
         this.insertOpt.body = JSON.stringify(object);
         const response = await fetch(this.endPoint, this.insertOpt);
-        const occurrence = await response.json().catch(e => {
-            console.log(e);
-        })
+        const occurrence = await response.json();
         return occurrence;
     }
 
     update = async (id: string | undefined, object: Client|Car|Booking) => {
         this.updateOpt.body = JSON.stringify(object);
         const response = await fetch(this.endPoint + `&id=${id}`, this.updateOpt);
-        const occurrence = await response.json().catch(e => {
-            console.log(e);
-        });
+        const occurrence = await response.json();
         return occurrence;
     }
 
     delete = async (id: string | undefined) =>{
-        const response = await fetch(this.endPoint + `&id=${id}`, this.deleteOpt)
-        const occurrence = await response.json().catch(e => {
-            console.log(e);
-        });
+        const response = await fetch(this.endPoint + `&id=${id}`, this.deleteOpt);
+        const occurrence = await response.json();
         return occurrence;
     }
 }
 
 const http = new httpService('http://146.59.159.215:82', 'carService');
 const car: Car = {
-    numberPlate: '6881GLE',
+    numberPlate: '1212GLE',
     brand: 'ford',
     model: 'fiesta',
     color: 'green',
@@ -85,6 +78,6 @@ const car: Car = {
     bookingPrice: 32.10
 }
 /* console.log(http.getAll());
-console.log(http.getOne('3'));
+ *//*console.log(http.getOne('3'));
 console.log(http.insert(car));
 console.log(http.getAll()); */

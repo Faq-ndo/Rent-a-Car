@@ -1,7 +1,12 @@
 class bookingService {
     public bookings: Booking[];
+    private http : httpService;
     constructor() {
         this.bookings = [];
+        this.http = new httpService('http://146.59.159.215:82','bookingService');
+        this.http.getAll().then(res => {
+            this.bookings = res;
+        });
     }
 
     findLocalBookingBy = (param: string, valueParam: string) => {

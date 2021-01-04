@@ -8,6 +8,13 @@ type Client = {
     endorses? : Client[]
 }
 
+type ClientResponse = {
+    id?: string,
+    dni?: string,
+    errorMessage?: string,
+    status: string,
+}
+
 type Car = {
     id?: string,
     numberPlate : string,
@@ -16,6 +23,13 @@ type Car = {
     brand : string,
     bookingPrice : number,
     garage : string
+}
+
+type CarResponse = {
+    id?: string,
+    numberPlate?: string,
+    errorMessage?: string,
+    status: string,
 }
 
 type Booking = {

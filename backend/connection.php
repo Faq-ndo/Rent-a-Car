@@ -28,4 +28,3 @@ function getLastInsertId () {
     global $pdo;
     return $pdo->lastInsertId();
 }
-?>

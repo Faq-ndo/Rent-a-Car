@@ -5,8 +5,8 @@ function insert($queryData, $sql) {
     return executeQuery($queryData, $sql);
 }
 
-function selectAll($sql, $getData) {
-    $stm = executeQuery([], $sql, $getData);
+function selectAll($sql) {
+    $stm = executeQuery([], $sql, true);
     if($stm->rowCount() > 0){
         while ($row = $stm->fetch(PDO::FETCH_ASSOC)){
             $rows[] = $row;
@@ -15,8 +15,8 @@ function selectAll($sql, $getData) {
     return $rows;
 }
 
-function selectByID($queryData, $sql, $getData) {
-    $stm =  executeQuery($queryData, $sql, $getData);
+function selectBy($queryData, $sql) {
+    $stm =  executeQuery($queryData, $sql, true);
     return $stm->fetch(PDO::FETCH_ASSOC);
 }
 

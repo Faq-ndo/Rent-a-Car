@@ -1,21 +1,19 @@
 class rentClient{
-    public id : string;
+    public id : string | undefined;
     private _dni : string = "";
     private _name : string = "";
     public address : string;
     private _phoneNumber : string = "";
-    public avaledBy : string;
-    public endorses: Client[];
+    public avaledBy : string = "";
+    public endorses: Client[] = [];
 
 
-    constructor ({id, dni, name, address, phoneNumber, avaledBy = "", endorses = []}: Client){
+    constructor ({id, dni, name, address, phoneNumber}: Client){
             this.id = id;
             this.dni = dni;
             this.name = name;
             this.address = address;
             this.phone = phoneNumber;
-            this.avaledBy = avaledBy;
-            this.endorses = endorses;
     }
 
     set dni(dni : string){

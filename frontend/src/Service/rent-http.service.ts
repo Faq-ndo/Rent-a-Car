@@ -54,14 +54,14 @@ class httpService {
         return occurrence;
     }
 
-    update = async (id: string | undefined, object: Client|Car|Booking) => {
+    update = async (id: number | undefined, object: Client|Car|Booking) => {
         this.updateOpt.body = JSON.stringify(object);
         const response = await fetch(this.endPoint + `&id=${id}`, this.updateOpt);
         const occurrence = await response.json();
         return occurrence;
     }
 
-    delete = async (id: string | undefined) =>{
+    delete = async (id: number | undefined) =>{
         const response = await fetch(this.endPoint + `&id=${id}`, this.deleteOpt);
         const occurrence = await response.json();
         return occurrence;

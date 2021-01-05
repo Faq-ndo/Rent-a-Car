@@ -1,5 +1,5 @@
 type Client = {
-    id: string,
+    id?: string,
     dni : string,
     name: string,
     address : string,
@@ -16,7 +16,7 @@ type ClientResponse = {
 }
 
 type Car = {
-    id?: string,
+    id?: number,
     numberPlate : string,
     model : string,
     color : string,

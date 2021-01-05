@@ -31,8 +31,17 @@ class carService {
     }
 
     updateCar = (car: rentCar) => {
+        const backupCar = this.findLocalCarBy('id', car.id!)
         this.update(car);
-        this.http.update(car.id, car).then()
+        this.http.update(car.id, car).then(res => {
+            if(res.status === 'ko'){
+                console.log(res.errorMessage);
+                this.delete(car);
+                this.add(backupCar!);
+            }if(res.status === 'ok'){
+                console.log('The car was updated successfully');
+            }
+        });
     }
 
     deleteCar = (car: rentCar) => {
@@ -47,12 +56,12 @@ class carService {
     }
 
 
-    findLocalCarBy = (param: string, valueParam: string) => 
+    findLocalCarBy = (param: string, valueParam: string | number) => 
          this.cars.find(_car => _car[param as keyof Car] === valueParam)
 
 
     private add = (car: rentCar) => {
-        car.id = this.createUUID4();
+        car.id = Math.floor(Math.random() * 100);
         const carSearched = this.findLocalCarBy('numberPlate', car.numberPlate);
         if (!carSearched){
             this.cars = [...this.cars, car];
@@ -60,8 +69,9 @@ class carService {
     }
 
     private update = (newCarData: rentCar) => {
+        console.log('entra');
         this.cars.find(_car => {
-            if(_car.id === newCarData.id){
+            if(_car.id == newCarData.id){
                Object.assign(_car, newCarData);
             }
         })
@@ -80,22 +90,28 @@ class carService {
       }
 }
 const c1: Car = {
-    id: '33',
-    numberPlate: '6104MMM',
-    brand: 'Renault',
-    model: 'Clio',
+    id: 36,
+    numberPlate: '6124MMM',
+    brand: 'Ferrari',
+    model: 'F40',
     color: 'Red',
-    garage: 'B33',
-    bookingPrice: 32.10
+    garage: 'B11',
+    bookingPrice: 15.99
 }
 const carserv = new carService();
 const car1 = new rentCar(c1);
-//carserv.insertCar(car1);
 
 setTimeout(function as(){
-    carserv.deleteCar(car1);
-    console.log('COCHES CARGADOS EN LOCAL', carserv.cars)
-},9000);
+   console.log(carserv.cars);
+},2000);
+
+setTimeout(function as(){
+   carserv.updateCar(car1);
+},4000);
+
+setTimeout(function as(){
+    console.log(carserv.cars);
+},8000);
 
 
 

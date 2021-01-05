@@ -21,7 +21,19 @@ function selectAllClients(){
 
 function selectClientByID($clientID){
     $queryData = ["id" => $clientID];
-    echo json_encode(selectBy($queryData, SQL_SELECT_CLIENT_BY_ID));
+    $clientData = selectBy($queryData, SQL_SELECT_CLIENT_BY_ID_WITH_AVALED_BY);
+    if($clientData){
+        $endorsedQueryData = ["id" => $clientData["id"]];
+        $endorsedClients = selectAllBy($endorsedQueryData, SQL_SELECT_ALL_ENDORSED_CLIENTS_BY_ID);
+        if($endorsedClients){
+            foreach ($endorsedClients as $endorsedClient){
+                $clientData["endorses"][] = $endorsedClient["dni"];
+            }
+        }
+        echo json_encode($clientData);
+    } else echo json_encode(["status" => "ko", "errorMessage" => "The client that is being selected does not exist"]);
+    /*$queryData = ["id" => $clientID];
+    echo json_encode(selectBy($queryData, SQL_SELECT_CLIENT_BY_ID));*/
 }
 
 function insertClient($clientQueryData){
@@ -44,8 +56,12 @@ function updateClient($clientQueryData, $id){
 
 function deleteClient($clientID){
     $queryData = ["id" => $clientID];
+    //$clientData = selectBy($queryData, SQL_SELECT_CLIENT_BY_ID);
     $clientData = selectBy($queryData, SQL_SELECT_CLIENT_BY_ID);
     if (isset($clientData["id"])){
+        /*$endorsedClientData = selectBy($queryData, SQL_SELECT_ENDORSED_CLIENT_BY_ID);
+        if (isset($endorsedClientData["id"])) */
+        deleteByID($queryData, SQL_DELETE_ENDORSED_CLIENT);
         $hasBeenDeleted = deleteByID($queryData, SQL_DELETE_CLIENT);
         if($hasBeenDeleted){
             echo json_encode(["status" => "ok"]);

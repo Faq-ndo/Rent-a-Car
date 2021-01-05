@@ -1,5 +1,5 @@
 class carService {
-    public cars: Car[];
+    public cars: rentCar[];
     private http:  httpService;
 
     constructor() {
@@ -32,7 +32,7 @@ class carService {
 
     updateCar = (car: rentCar) => {
         this.update(car);
-        this.http.update(car.id, car)
+        this.http.update(car.id, car).then()
     }
 
     deleteCar = (car: rentCar) => {
@@ -52,6 +52,7 @@ class carService {
 
 
     private add = (car: rentCar) => {
+        car.id = this.createUUID4();
         const carSearched = this.findLocalCarBy('numberPlate', car.numberPlate);
         if (!carSearched){
             this.cars = [...this.cars, car];
@@ -67,7 +68,8 @@ class carService {
     }
 
     private delete = (car : rentCar) => {
-        return this.cars.filter(_car => _car.numberPlate !== car.numberPlate)
+        /* return this.cars.filter(_car => _car.id !== car.id) */
+        this.cars.splice(this.cars.indexOf(car), 1);
     }
 
     createUUID4 = () => {
@@ -78,21 +80,22 @@ class carService {
       }
 }
 const c1: Car = {
+    id: '33',
     numberPlate: '6104MMM',
-    brand: 'ford',
-    model: 'fiesta',
-    color: 'green',
-    garage: 'B32',
+    brand: 'Renault',
+    model: 'Clio',
+    color: 'Red',
+    garage: 'B33',
     bookingPrice: 32.10
 }
 const carserv = new carService();
 const car1 = new rentCar(c1);
-carserv.insertCar(car1);
-
+//carserv.insertCar(car1);
 
 setTimeout(function as(){
+    carserv.deleteCar(car1);
     console.log('COCHES CARGADOS EN LOCAL', carserv.cars)
-},6000);
+},9000);
 
 
 

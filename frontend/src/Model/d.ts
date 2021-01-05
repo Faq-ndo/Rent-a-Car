@@ -3,7 +3,7 @@ type Client = {
     dni : string,
     name: string,
     address : string,
-    phone : string,
+    phoneNumber : string,
     avaledBy? : string,
     endorses? : Client[]
 }

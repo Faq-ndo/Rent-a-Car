@@ -78,6 +78,6 @@ const car: Car = {
     bookingPrice: 32.10
 }
 /* console.log(http.getAll());
- *//*console.log(http.getOne('3'));
+console.log(http.getOne('3'));
 console.log(http.insert(car));
 console.log(http.getAll()); */

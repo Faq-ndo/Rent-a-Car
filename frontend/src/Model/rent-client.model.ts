@@ -3,17 +3,17 @@ class rentClient{
     private _dni : string = "";
     private _name : string = "";
     public address : string;
-    private _phone : string = "";
+    private _phoneNumber : string = "";
     public avaledBy : string;
     public endorses: Client[];
 
 
-    constructor ({id, dni, name, address, phone, avaledBy = "", endorses = []}: Client){
+    constructor ({id, dni, name, address, phoneNumber, avaledBy = "", endorses = []}: Client){
             this.id = id;
             this.dni = dni;
             this.name = name;
             this.address = address;
-            this.phone = phone;
+            this.phone = phoneNumber;
             this.avaledBy = avaledBy;
             this.endorses = endorses;
     }
@@ -43,20 +43,10 @@ class rentClient{
        if(!/(^[679]{1}[0-9]{8}$)/.test(phone)){
            throw new Error('Insert a valid Phone')
        }
-       this._phone = phone;
+       this._phoneNumber = phone;
    }
 
    get phone(){
-       return this._phone;
+       return this._phoneNumber;
    }
 }
-const co : Client = {
-    id: '1',
-    dni : 'Y1029209L',
-    name : 'Facundo',
-    address : 'Calle 123',
-    phone : '679337793',
-}
-
-const c = new rentClient(co);
-console.log(c);

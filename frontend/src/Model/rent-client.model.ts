@@ -1,5 +1,5 @@
 class rentClient{
-    public id : string | undefined;
+    public id : number | undefined;
     private _dni : string = "";
     private _name : string = "";
     public address : string;

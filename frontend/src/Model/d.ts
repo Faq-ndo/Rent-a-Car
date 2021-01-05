@@ -1,5 +1,5 @@
 type Client = {
-    id?: string,
+    id?: number,
     dni : string,
     name: string,
     address : string,

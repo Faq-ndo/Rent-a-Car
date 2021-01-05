@@ -1,27 +1,74 @@
 class clientService {
-    public clients: Client[];
+    public clients: rentClient[];
     private http: httpService;
 
     constructor() {
         this.clients = [];
         this.http = new httpService('http://146.59.159.215:82','clientService');
         this.http.getAll().then(res => {
-            this.clients = res;
-        });
+            const clients = res.map((_ob : Client) => {
+                return new rentClient(_ob);
+            })
+            this.clients = [...this.clients, ...clients];
+        })
     }
 
-    findLocalClientBy = (param: string, valueParam: string) => {
-        return this.clients.find(_client => _client[param as keyof Client] === valueParam);
+    insertClient = (client : rentClient) => {
+        this.add(client);
+        this.http.insert(client).then(res => {
+            if(res.status === 'ko'){
+                console.log(res.errorMessage);
+                this.delete(client);
+            }
+            if(res.status === 'ok'){
+                this.clients.find(_client => {
+                    if(_client.dni === res.dni){
+                        _client.id = res.id;
+                    }
+                })
+            }
+        })
+    };
+
+    updateClient = (client : rentClient) => {
+        const backupClient = this.findLocalClientBy('id', client.id!);
+        this.update(client);
+        this.http.update(client.id, client).then(res => {
+            if(res.status === 'ko'){
+                console.log(res.errorMessage);
+                this.delete(client);
+                this.add(backupClient!);
+            }if(res.status === 'ok'){
+                console.log('The client was updated successfully')
+            }
+        })
+    };
+
+    deleteClient = (client : rentClient) => {
+        this.delete(client);
+        this.http.delete(client.id).then(res => {
+            if(res.status === 'ko'){
+                console.log(res.errorMessage);
+            }if(res.status === 'ok'){
+                console.log('The car was deleted successfully');
+            }
+        })
+    }
+    
+
+    findLocalClientBy = (param: string, valueParam: string | number) => {
+        return this.clients.find(_client => _client[param as keyof rentClient] === valueParam);
     }
 
-    add = (client: Client) => {
+    private add = (client: rentClient) => {
+        client.id = Math.floor(Math.random() * 100);
         const clientSearched = this.findLocalClientBy('dni', client.dni);
         if (!clientSearched){
             this.clients = [...this.clients, client];
       }
     }
 
-    update = (newClientData: Client) => {
+    private update = (newClientData: rentClient) => {
         this.clients.find(_client => {
             if(_client.id === newClientData.id){
                 Object.assign(_client, newClientData);
@@ -29,14 +76,14 @@ class clientService {
         })
     }
 
-    delete = (client : Client) => {
-        return this.clients.filter(_client => _client.dni !== client.dni)
+    private delete = (client : rentClient) => {
+        /* return this.clients.filter(_client => _client.dni !== client.dni) */
+        this.clients.splice(this.clients.indexOf(client), 1);
     }
-
-    createUUID4 = () => {
-        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, cod => {
-            let randUUID = Math.random() * 16 | 0, value = cod == 'x' ? randUUID : (randUUID & 0x3 | 0x8);
-            return value.toString(16);
-        });
-      }
 }
+
+const cliserve = new clientService();
+
+setTimeout(() => {
+    console.log(cliserve.clients);
+}, 3000);

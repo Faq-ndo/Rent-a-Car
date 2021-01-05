@@ -81,37 +81,7 @@ class carService {
         /* return this.cars.filter(_car => _car.id !== car.id) */
         this.cars.splice(this.cars.indexOf(car), 1);
     }
-
-    createUUID4 = () => {
-        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, cod => {
-            let randUUID = Math.random() * 16 | 0, value = cod == 'x' ? randUUID : (randUUID & 0x3 | 0x8);
-            return value.toString(16);
-        });
-      }
 }
-const c1: Car = {
-    id: 36,
-    numberPlate: '6124MMM',
-    brand: 'Ferrari',
-    model: 'F40',
-    color: 'Red',
-    garage: 'B11',
-    bookingPrice: 15.99
-}
-const carserv = new carService();
-const car1 = new rentCar(c1);
-
-setTimeout(function as(){
-   console.log(carserv.cars);
-},2000);
-
-setTimeout(function as(){
-   carserv.updateCar(car1);
-},4000);
-
-setTimeout(function as(){
-    console.log(carserv.cars);
-},8000);
 
 
 

@@ -47,14 +47,14 @@ class httpService {
         return occurrence;
     }
 
-    insert = async (object: Client|Car|Booking) => {
+    insert = async (object: rentClient|rentCar|rentBooking) => {
         this.insertOpt.body = JSON.stringify(object);
         const response = await fetch(this.endPoint, this.insertOpt);
         const occurrence = await response.json();
         return occurrence;
     }
 
-    update = async (id: number | undefined, object: Client|Car|Booking) => {
+    update = async (id: number | undefined, object: rentClient|rentCar|rentBooking) => {
         this.updateOpt.body = JSON.stringify(object);
         const response = await fetch(this.endPoint + `&id=${id}`, this.updateOpt);
         const occurrence = await response.json();

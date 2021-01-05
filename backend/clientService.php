@@ -4,8 +4,19 @@ include_once "sql_sentences.php";
 include_once "config_values.php";
 
 function selectAllClients(){
-    $data = json_encode(selectAll(SQL_SELECT_ALL_CLIENTS));
-    echo $data;
+    $allClientsData = selectAll(SQL_SELECT_ALL_CLIENTS_WITH_AVALED_BY);
+    foreach ($allClientsData as &$clientData){
+        $clientQueryData = ["id" => $clientData["id"]];
+        $endorsedClients = selectAllBy($clientQueryData, SQL_SELECT_ALL_ENDORSED_CLIENTS_BY_ID);
+        if($endorsedClients){
+            foreach ($endorsedClients as $endorsedClient){
+                $clientData["endorses"][] = $endorsedClient["dni"];
+            }
+        }
+    }
+    echo json_encode($allClientsData);
+    /*$data = json_encode(selectAll(SQL_SELECT_ALL_CLIENTS));
+    echo $data;*/
 }
 
 function selectClientByID($clientID){
@@ -14,8 +25,8 @@ function selectClientByID($clientID){
 }
 
 function insertClient($clientQueryData){
-    $clientData = selectBy(["numberPlate" => $clientQueryData["dni"]], SQL_SELECT_CLIENT_BY_DNI);
-    if (!$clientData["clientID"]){
+    $clientData = selectBy(["dni" => $clientQueryData["dni"]], SQL_SELECT_CLIENT_BY_DNI);
+    if (!$clientData["id"]){
         $hasBeenInserted = insert($clientQueryData, SQL_INSERT_CLIENT);
         if($hasBeenInserted){
             echo json_encode(["status" => "ok", "id" => getLastInsertId(), "dni" => $clientQueryData["dni"]]);
@@ -34,7 +45,7 @@ function updateClient($clientQueryData, $id){
 function deleteClient($clientID){
     $queryData = ["id" => $clientID];
     $clientData = selectBy($queryData, SQL_SELECT_CLIENT_BY_ID);
-    if (isset($clientData["clientID"])){
+    if (isset($clientData["id"])){
         $hasBeenDeleted = deleteByID($queryData, SQL_DELETE_CLIENT);
         if($hasBeenDeleted){
             echo json_encode(["status" => "ok"]);

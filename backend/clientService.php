@@ -37,11 +37,20 @@ function selectClientByID($clientID){
 }
 
 function insertClient($clientQueryData){
+    if(isset($clientQueryData["avaledBy"])){
+        $guarantorClientData = selectBy(["dni" => $clientQueryData["avaledBy"]], SQL_SELECT_CLIENT_BY_DNI);
+        if (!$guarantorClientData["id"]) {
+            echo json_encode(["status" => "ko", "errorMessage" => "The guarantor person is not a client"]);
+            die();
+        }
+    }
     $clientData = selectBy(["dni" => $clientQueryData["dni"]], SQL_SELECT_CLIENT_BY_DNI);
-    if (!$clientData["id"]){
-        $hasBeenInserted = insert($clientQueryData, SQL_INSERT_CLIENT);
-        if($hasBeenInserted){
-            echo json_encode(["status" => "ok", "id" => getLastInsertId(), "dni" => $clientQueryData["dni"]]);
+    if (!$clientData["id"]) {
+        $hasBeenInsertedInClientTable = insert(["dni" => $clientQueryData["dni"], "name" => $clientQueryData["name"], "address" => $clientQueryData["address"], "phoneNumber" => $clientQueryData["phoneNumber"]], SQL_INSERT_CLIENT);
+        if ($hasBeenInsertedInClientTable && isset($clientQueryData["avaledBy"])) {
+            $id = getLastInsertId();
+            $hasBeenInsertedInEndorsedTable = insert(["clientIDEndorsed" => $id, "clientIDGuarantor" => $guarantorClientData["id"], "state" => $clientQueryData["state"]], SQL_INSERT_ENDORSED_CLIENT);
+            if ($hasBeenInsertedInEndorsedTable) echo json_encode(["status" => "ok", "id" => $id, "dni" => $clientQueryData["dni"]]);
         } else echo json_encode(["status" => "ko", "errorMessage" => "The client could not be inserted due to a problem"]);
     } else echo json_encode(["status" => "ko", "errorMessage" => "The client that is being inserted is duplied"]);
 }

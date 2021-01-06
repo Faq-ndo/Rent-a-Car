@@ -67,17 +67,3 @@ class httpService {
         return occurrence;
     }
 }
-
-const http = new httpService('http://146.59.159.215:82', 'carService');
-const car: Car = {
-    numberPlate: '1212GLE',
-    brand: 'ford',
-    model: 'fiesta',
-    color: 'green',
-    garage: 'B32',
-    bookingPrice: 32.10
-}
-/* console.log(http.getAll());
-console.log(http.getOne('3'));
-console.log(http.insert(car));
-console.log(http.getAll()); */

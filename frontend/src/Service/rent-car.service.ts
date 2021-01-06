@@ -31,7 +31,7 @@ class carService {
     }
 
     updateCar = (car: rentCar) => {
-        const backupCar = this.findLocalCarBy('id', car.id!)
+        const backupCar = this.findLocalCarBy('id', car.id!);
         this.update(car);
         this.http.update(car.id, car).then(res => {
             if(res.status === 'ko'){
@@ -57,7 +57,7 @@ class carService {
 
 
     findLocalCarBy = (param: string, valueParam: string | number) => 
-         this.cars.find(_car => _car[param as keyof Car] === valueParam)
+         this.cars.find(_car => _car[param as keyof Car] === valueParam);
 
 
     private add = (car: rentCar) => {
@@ -69,7 +69,6 @@ class carService {
     }
 
     private update = (newCarData: rentCar) => {
-        console.log('entra');
         this.cars.find(_car => {
             if(_car.id == newCarData.id){
                Object.assign(_car, newCarData);

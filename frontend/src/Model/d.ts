@@ -5,7 +5,7 @@ type Client = {
     address : string,
     phoneNumber : string,
     avaledBy? : string,
-    endorses? : Client[]
+    endorses? : string[]
 }
 
 type ClientResponse = {

@@ -50,13 +50,12 @@ class clientService {
             if(res.status === 'ko'){
                 console.log(res.errorMessage);
             }if(res.status === 'ok'){
-                console.log('The car was deleted successfully');
+                console.log('The client was deleted successfully');
             }
         })
     }
     
-
-    findLocalClientBy = (param: string, valueParam: string | number) => {
+    findLocalClientBy = (param: string, valueParam: string |number) => {
         return this.clients.find(_client => _client[param as keyof rentClient] === valueParam);
     }
 
@@ -76,14 +75,27 @@ class clientService {
         })
     }
 
-    private delete = (client : rentClient) => {
-        /* return this.clients.filter(_client => _client.dni !== client.dni) */
+     delete = (client : rentClient) => {
+        /*return this.clients.filter(_client => _client.dni !== client.dni)*/
         this.clients.splice(this.clients.indexOf(client), 1);
     }
 }
-
+const c : Client= {
+    id: 2,
+    dni: "12121212q",
+    name: "Alberto",
+    address: "C/Alameda, 45",
+    phoneNumber: "622141411",
+    avaledBy: "22222222a",
+}
+const cli = new rentClient(c);
 const cliserve = new clientService();
-
 setTimeout(() => {
     console.log(cliserve.clients);
-}, 3000);
+}, 2000);
+setTimeout(() => {
+    console.log(cliserve.deleteClient(cli));
+}, 4000);
+setTimeout(() => {
+    console.log(cliserve.clients);
+}, 8000);

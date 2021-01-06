@@ -1,22 +1,24 @@
 class rentClient{
     public id : number | undefined;
-    private _dni : string = "";
+    public dni : string = "";
     private _name : string = "";
     public address : string;
     private _phoneNumber : string = "";
-    public avaledBy : string = "";
-    public endorses: Client[] = [];
+    public avaledBy : string | undefined;
+    public endorses: string[] | undefined;
 
 
-    constructor ({id, dni, name, address, phoneNumber}: Client){
+    constructor ({id, dni, name, address, phoneNumber, avaledBy, endorses}: Client){
             this.id = id;
             this.dni = dni;
             this.name = name;
             this.address = address;
             this.phone = phoneNumber;
+            this.avaledBy = avaledBy;
+            this.endorses = endorses;
     }
 
-    set dni(dni : string){
+/*     set dni(dni : string){
        if(!/([aA-zZ]|[0-9])[0-9]{7}([a-z]|[A-Z]|[0-9])/.test(dni)){
            throw new Error('Insert a valid Spanish DNI');
        }
@@ -24,7 +26,7 @@ class rentClient{
    }
    get dni(){
        return this._dni;
-   }
+   } */
 
    set name(name : string){
        if(!/^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$/.test(name)){
@@ -46,5 +48,13 @@ class rentClient{
 
    get phone(){
        return this._phoneNumber;
+   }
+   toJSON() {
+       return {
+        dni : this.dni,
+        name: this.name,
+        address : this.address,
+        phoneNumber : this._phoneNumber,
+       }
    }
 }

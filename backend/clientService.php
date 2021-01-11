@@ -4,21 +4,53 @@ include_once "sql_sentences.php";
 include_once "config_values.php";
 
 function selectAllClients(){
-    $data = json_encode(selectAll(SQL_SELECT_ALL_CLIENTS));
-    echo $data;
+    $allClientsData = selectAll(SQL_SELECT_ALL_CLIENTS_WITH_AVALED_BY);
+    foreach ($allClientsData as &$clientData){
+        $clientQueryData = ["id" => $clientData["id"]];
+        $endorsedClients = selectAllBy($clientQueryData, SQL_SELECT_ALL_ENDORSED_CLIENTS_BY_ID);
+        if($endorsedClients){
+            foreach ($endorsedClients as $endorsedClient){
+                $clientData["endorses"][] = $endorsedClient["dni"];
+            }
+        }
+    }
+    echo json_encode($allClientsData);
+    /*$data = json_encode(selectAll(SQL_SELECT_ALL_CLIENTS));
+    echo $data;*/
 }
 
 function selectClientByID($clientID){
     $queryData = ["id" => $clientID];
-    echo json_encode(selectBy($queryData, SQL_SELECT_CLIENT_BY_ID));
+    $clientData = selectBy($queryData, SQL_SELECT_CLIENT_BY_ID_WITH_AVALED_BY);
+    if($clientData){
+        $endorsedQueryData = ["id" => $clientData["id"]];
+        $endorsedClients = selectAllBy($endorsedQueryData, SQL_SELECT_ALL_ENDORSED_CLIENTS_BY_ID);
+        if($endorsedClients){
+            foreach ($endorsedClients as $endorsedClient){
+                $clientData["endorses"][] = $endorsedClient["dni"];
+            }
+        }
+        echo json_encode($clientData);
+    } else echo json_encode(["status" => "ko", "errorMessage" => "The client that is being selected does not exist"]);
+    /*$queryData = ["id" => $clientID];
+    echo json_encode(selectBy($queryData, SQL_SELECT_CLIENT_BY_ID));*/
 }
 
 function insertClient($clientQueryData){
-    $clientData = selectBy(["numberPlate" => $clientQueryData["dni"]], SQL_SELECT_CLIENT_BY_DNI);
-    if (!$clientData["clientID"]){
-        $hasBeenInserted = insert($clientQueryData, SQL_INSERT_CLIENT);
-        if($hasBeenInserted){
-            echo json_encode(["status" => "ok", "id" => getLastInsertId(), "dni" => $clientQueryData["dni"]]);
+    if(isset($clientQueryData["avaledBy"])){
+        $guarantorClientData = selectBy(["dni" => $clientQueryData["avaledBy"]], SQL_SELECT_CLIENT_BY_DNI);
+        if (!$guarantorClientData["id"]) {
+            echo json_encode(["status" => "ko", "errorMessage" => "The guarantor person is not a client"]);
+            die();
+        }
+    }
+    $clientData = selectBy(["dni" => $clientQueryData["dni"]], SQL_SELECT_CLIENT_BY_DNI);
+    if (!$clientData["id"]) {
+        $hasBeenInsertedInClientTable = insert(["dni" => $clientQueryData["dni"], "name" => $clientQueryData["name"], "address" => $clientQueryData["address"], "phoneNumber" => $clientQueryData["phoneNumber"]], SQL_INSERT_CLIENT);
+        if ($hasBeenInsertedInClientTable && isset($clientQueryData["avaledBy"])) {
+            $id = getLastInsertId();
+            $hasBeenInsertedInEndorsedTable = insert(["clientIDEndorsed" => $id, "clientIDGuarantor" => $guarantorClientData["id"], "state" => $clientQueryData["state"]], SQL_INSERT_ENDORSED_CLIENT);
+            if ($hasBeenInsertedInEndorsedTable) echo json_encode(["status" => "ok", "id" => $id, "dni" => $clientQueryData["dni"]]);
         } else echo json_encode(["status" => "ko", "errorMessage" => "The client could not be inserted due to a problem"]);
     } else echo json_encode(["status" => "ko", "errorMessage" => "The client that is being inserted is duplied"]);
 }
@@ -33,8 +65,12 @@ function updateClient($clientQueryData, $id){
 
 function deleteClient($clientID){
     $queryData = ["id" => $clientID];
+    //$clientData = selectBy($queryData, SQL_SELECT_CLIENT_BY_ID);
     $clientData = selectBy($queryData, SQL_SELECT_CLIENT_BY_ID);
-    if (isset($clientData["clientID"])){
+    if (isset($clientData["id"])){
+        /*$endorsedClientData = selectBy($queryData, SQL_SELECT_ENDORSED_CLIENT_BY_ID);
+        if (isset($endorsedClientData["id"])) */
+        deleteByID($queryData, SQL_DELETE_ENDORSED_CLIENT);
         $hasBeenDeleted = deleteByID($queryData, SQL_DELETE_CLIENT);
         if($hasBeenDeleted){
             echo json_encode(["status" => "ok"]);

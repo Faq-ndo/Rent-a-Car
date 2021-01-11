@@ -2,20 +2,32 @@
 include_once "config_values.php";
 
 define("SQL_INSERT_CLIENT",
-    "INSERT INTO ". DB_TABLE_CLIENT . " (dni, name, address, phoneNumber) 
-    VALUES (:dni, :cName, :address, :phoneNumber)");
+    "INSERT INTO ". DB_TABLE_CLIENT ." (dni, name, address, phoneNumber) 
+    VALUES (:dni, :name, :address, :phoneNumber)");
+
+define("SQL_INSERT_ENDORSED_CLIENT",
+    "INSERT INTO ". DB_TABLE_ENDORSED ." (clientIDEndorsed, clientIDGuarantor, state) 
+    VALUES (:clientIDEndorsed, :clientIDGuarantor, :state)");
 
 //define("SQL_SELECT_ALL_CLIENTS", "SELECT * FROM " . DB_TABLE_CLIENT);
-define("SQL_SELECT_ALL_CLIENTS", "SELECT * FROM " . DB_TABLE_CLIENT);
+define("SQL_SELECT_ALL_CLIENTS_WITH_AVALED_BY", "select c.*, clientendorse.dniGuarantor avaledBy, e.state as state from ". DB_TABLE_CLIENT ." c left join ". DB_TABLE_ENDORSED ." e on c.id = e.clientIDEndorsed left join (select distinct cl.dni as dniGuarantor from ". DB_TABLE_CLIENT ." cl join ". DB_TABLE_ENDORSED ." e on cl.id = e.clientIDGuarantor) clientendorse on e.clientIDGuarantor = clientendorse.idGuarantor");
+
+define("SQL_SELECT_ALL_ENDORSED_CLIENTS_BY_ID", "select c.dni from ". DB_TABLE_CLIENT ." c join ". DB_TABLE_ENDORSED ." e on c.id = e.clientIDEndorsed where e.clientIDGuarantor = :id");
 
 define("SQL_SELECT_CLIENT_BY_ID", "SELECT * FROM " . DB_TABLE_CLIENT . " WHERE id = :id");
 
+define("SQL_SELECT_CLIENT_BY_ID_WITH_AVALED_BY", "select c.*, clientendorse.dniGuarantor avaledBy from ". DB_TABLE_CLIENT ." c left join ". DB_TABLE_ENDORSED ." e on c.id = e.clientIDEndorsed left join (select distinct cl.dni as dniGuarantor from ". DB_TABLE_CLIENT ." cl join ". DB_TABLE_ENDORSED ." e on cl.id = e.clientIDGuarantor) clientendorse on e.clientIDGuarantor = clientendorse.idGuarantor where c.id = :id");
+
 define("SQL_SELECT_CLIENT_BY_DNI", "SELECT * FROM " . DB_TABLE_CLIENT . " WHERE dni = :dni");
+
+define("SQL_SELECT_ENDORSED_CLIENT_BY_ID", "SELECT * FROM " . DB_TABLE_ENDORSED . " WHERE clientIDEndorsed = :id");
 
 define("SQL_DELETE_CLIENT", "DELETE FROM " . DB_TABLE_CLIENT . " WHERE id = :id");
 
-define("SQL_UPDATE_CLIENT", "UPDATE " . DB_TABLE_CLIENT . " SET dni = :dni, name = :cName, address = :address, 
-    phoneNumber = :phoneNumber WHERE id = :clientID");
+define("SQL_DELETE_ENDORSED_CLIENT", "DELETE FROM " . DB_TABLE_ENDORSED . " WHERE clientIDEndorsed = :id");
+
+define("SQL_UPDATE_CLIENT", "UPDATE " . DB_TABLE_CLIENT . " SET dni = :dni, name = :name, address = :address, 
+    phoneNumber = :phoneNumber WHERE id = :id");
 
 
 

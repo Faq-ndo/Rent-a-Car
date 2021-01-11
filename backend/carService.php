@@ -14,7 +14,7 @@ function selectCarByID($carID) {
 
 function insertCar($carQueryData) {
     $carData = selectBy(["numberPlate" => $carQueryData["numberPlate"]], SQL_SELECT_CAR_BY_NUMBER_PLATE);
-    if (!$carData["carID"]){
+    if (!$carData["id"]){
         $hasBeenInserted = insert($carQueryData, SQL_INSERT_CAR);
         if($hasBeenInserted){
             echo json_encode(["status" => "ok", "id" => getLastInsertId(), "numberPlate" => $carQueryData["numberPlate"]]);
@@ -33,7 +33,7 @@ function updateCar($carQueryData, $id) {
 function deleteCar($carID) {
     $queryData = ["id" => $carID];
     $carData = selectBy($queryData, SQL_SELECT_CAR_BY_ID);
-    if (isset($carData["carID"])){
+    if (isset($carData["id"])){
         $hasBeenDeleted = deleteByID($queryData, SQL_DELETE_CAR);
         if($hasBeenDeleted){
             echo json_encode(["status" => "ok"]);

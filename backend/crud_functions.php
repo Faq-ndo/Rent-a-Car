@@ -15,6 +15,16 @@ function selectAll($sql) {
     return $rows;
 }
 
+function selectAllBy($queryData, $sql) {
+    $stm = executeQuery($queryData, $sql, true);
+    if($stm->rowCount() > 0){
+        while ($row = $stm->fetch(PDO::FETCH_ASSOC)){
+            $rows[] = $row;
+        }
+    } else $rows = [];
+    return $rows;
+}
+
 function selectBy($queryData, $sql) {
     $stm =  executeQuery($queryData, $sql, true);
     return $stm->fetch(PDO::FETCH_ASSOC);

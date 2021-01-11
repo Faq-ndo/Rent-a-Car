@@ -1,0 +1,1 @@
+new rentController(new rentView(), new clientService(), new carService(), new bookingService());

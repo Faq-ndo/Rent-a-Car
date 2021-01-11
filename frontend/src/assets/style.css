@@ -1,17 +1,18 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700);
 @import url(https://fonts.googleapis.com/css2?family=Francois+One&display=swap);
+@import url(https://fonts.googleapis.com/css?family=Montserrat:400,700);
 * {
     margin: 0;
     padding: 0;
     font-family: 'Open Sans', sans-serif;
 }
 header{
-    background: url("img/texturaCabecera.jpg")center center repeat;
+        background: url("../assets/img/texturaCabecera.jpg")center center repeat;
 }
 
 main{
-    display: flex !important;
-    background-image: url("img/textura.jpg");
+    display: flex;
+    background-image: url("../assets/img/textura.jpg");
 }
 nav{
     width: 15%;
@@ -22,7 +23,7 @@ nav{
     flex-wrap: wrap;
 }
 .my-menu-buttons{
-    background-color: red;
+    background: rgb( 237, 126, 119 );
     color: black;
     border: 1px solid yellow;
     width:100%;
@@ -30,8 +31,8 @@ nav{
 }
 
 .my-menu-buttons:hover{
-    background-color:black;
-    color:red;
+    background: rgb(111, 101, 100 );
+    color:rgb( 237, 126, 119 );
     border: 1px solid yellow;
     width:100%;
     height: 50px;
@@ -67,15 +68,8 @@ header .header-links {
     color:red;
 }
 
-.searchform {
-    background-color: transparent;
-    border: none;
-    margin: 0; padding: 5px 0 15px 0;
-    width: 190px;
-}
-
 .my-container-clients{
-    background: url("img/clientes.jpg") center top no-repeat,
+    background: url("img/clientes.png") center top no-repeat,
                 url("img/fondo.JPG") repeat;
 }
 .my-options-buttons{
@@ -84,8 +78,8 @@ header .header-links {
 
     width: 100%;
     height: 50px;
-    background-color:black;
-    color:red;
+    background:rgb(111, 101, 100 );
+    color:rgb( 237, 126, 119 );
     border: 1px solid yellow;
     font-size: 20px;
     font-weight: bold;
@@ -104,13 +98,13 @@ header .header-links {
     width: 100%;
     height: 50px;
     background-position: center;
-    background-color: red;
+    background:rgb( 237, 126, 119 );
     color: black;
     border: 1px solid yellow;
 }
 
 .my-container-cars{
-    background: url("img/coches.jpg") center top no-repeat,
+    background: url("img/coches.png") center top no-repeat,
                 url("img/fondo.JPG") repeat;
 }
 
@@ -135,8 +129,8 @@ header .header-links {
     grid-template-columns:repeat(2,1fr);
 }
 
-#principal{
-    display: flex;
+main{
+    display: flex !important;
     justify-content: space-between;
 }
 
@@ -161,7 +155,6 @@ thead, tbody, tfoot{
 
 .ttb{
     color:black;
-
 }
 
 table,th,td,tr{
@@ -170,10 +163,35 @@ table,th,td,tr{
     border-collapse: collapse;
 }
 
-thead th, tfoot th, tfoot td {
+thead tr, tfoot tr {
     font-family: 'Oswald', sans-serif;
     background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.5));
-    border-radius: 6px;
+}
+
+thead tr:first-child th:first-child, tfoot tr:first-child td:first-child{
+    border-top-left-radius:8px;
+    border-bottom-left-radius:8px;
+}
+
+thead tr:first-child th:last-child, tfoot tr:first-child td:last-child{
+    border-top-right-radius:8px;
+    border-bottom-right-radius:8px;
+}
+
+tbody tr:first-child td:first-child{
+    border-top-left-radius:8px;
+}
+
+tbody tr:first-child td:last-child{
+    border-top-right-radius:8px;
+}
+
+tbody tr:last-child td:first-child{
+    border-bottom-left-radius:8px;
+}
+
+tbody tr:last-child td:last-child{
+    border-bottom-right-radius:8px;
 }
 
 table {
@@ -186,20 +204,31 @@ th {
 
 td {
     letter-spacing: 1px;
-    background-color:gainsboro;
 }
 
 tbody td {
     text-align: center;
+    background-color:gainsboro;
 }
 
 tfoot th {
     text-align: right;
 }
-
-.my-buttons{
+.insert{
     text-align: right;
 }
+.my-button-insert, .my-button-back{
+    font-weight: bold;
+    border-radius: 8px;
+}
+.my-button-insert{
+    background-color:rgba(253,29,29,1);
+}
+
+.my-button-back{
+    background-color:rgba(251,216,3,1);
+}
+
 td img {
     max-width: 15px;
     max-height: 15px;
@@ -213,7 +242,7 @@ td img {
     display: flex;
     justify-content:space-between;
     text-align: center;
-    background-image: url("img/piedepag.jpg");
+    background-image: url("../assets/img/piedepag.jpg");
     background-size: 100% 100%;
 }
 
@@ -223,4 +252,146 @@ td img {
 
 .fab fa-twitter, fa-facebook{
     color:white;
+}
+
+.form-group > input {
+    width: 30%;
+}
+
+.form-group > textarea {
+    width: 40%;
+    height: 100px;
+}
+
+form {
+    padding: 37.5px;
+    margin: 50px 0;
+}
+
+.forms{
+    font-family: 'Montserrat',
+    Arial, sans-serif;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    border: solid 3px #474544;
+    max-width: 768px;
+    margin: 60px auto;
+    position: relative;
+}
+
+.underline {
+    border-bottom: solid 2px #474544;
+    margin: -0.512em auto;
+    width: 140px;
+    padding-top: 8px;
+}
+
+.icon_wrapper {
+    margin: 50px auto 0;
+    width: 100%;
+}
+
+#icon {
+    display: block;
+    fill: #474544;
+    height: 50px;
+    margin: 0 auto;
+    width: 50px;
+}
+
+h2 {
+    color: #474544;
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: 7px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.nif, .plate, .color, .price, .nifBooking, .startDate, .totalPrice{
+    float: left;
+    width: 45%;
+}
+
+.name, .model, .brand, .garage, .plateBooking, .endDate, .gasLiter{
+    float: right;
+    width: 45%;
+}
+
+.address, .telephone{
+    width: 100%;
+}
+
+textarea{
+    overflow: auto;
+    line-height: 150%;
+    height: 150px;
+    resize: none;
+    width: 100%;
+}
+
+.description{
+    float:none;
+}
+
+input[type='text'], textarea{
+    background: none;
+    border: none;
+    border-bottom: solid 2px #474544;
+    color: #474544;
+    font-size: 1.000em;
+    font-weight: 400;
+    letter-spacing: 1px;
+    margin: 0em 0 1.875em 0;
+    padding: 0 0 0.875em 0;
+    text-transform: uppercase;
+    width: 100%;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+input[type='text']:focus, [type='tel']:focus, textarea:focus{
+    outline: none;
+    padding: 0 0 0.875em 0;
+}
+
+.addClient, .returnButtons, .addVehicle, .addReservation{
+    background: none;
+    border: solid 2px #474544;
+    color: #474544;
+    cursor: pointer;
+    display: inline-block;
+    font-family: 'Helvetica', Arial, sans-serif;
+    font-size: 0.875em;
+    font-weight: bold;
+    outline: none;
+    padding: 20px 35px;
+    text-transform: uppercase;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+.addClient:hover, .returnButtons:hover, .addVehicle:hover, .addReservation:hover{
+    background: #474544;
+    color: #F2F3EB;
+}
+
+.insert, .backButtons{
+    background: none;
+    color: #474544;
+    cursor: pointer;
+    font-family: 'Helvetica', Arial, sans-serif;
+    font-weight: bold;
+    outline: none;
 }
